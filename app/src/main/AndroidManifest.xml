@@ -16,7 +16,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SearchActivity">
+        <activity
+            android:name=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
         </activity>
 
         <receiver android:name=".InstallReceiver">
