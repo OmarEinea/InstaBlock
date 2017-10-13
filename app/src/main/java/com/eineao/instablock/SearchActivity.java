@@ -6,9 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -35,18 +37,31 @@ public class SearchActivity extends AppCompatActivity {
     }
 }
 
-class SearchApps extends AsyncTask<String, Integer, Elements> {
+class SearchApps extends AsyncTask<String, Integer, ArrayList> {
 
     private final String URL = "https://play.google.com/store/search?hl=en&c=apps&q=";
-    private Elements apps = null;
 
     @Override
-    protected Elements doInBackground(String... strings) {
+    protected ArrayList doInBackground(String... strings) {
+        Elements tags;
         try {
-            apps = Jsoup.connect(URL + strings[0]).get().select(".cover");
+            tags = Jsoup.connect(URL + strings[0]).get().select(".cover");
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+        ArrayList<AppDetails> apps = new ArrayList<>();
+        for(Element tag : tags)
+            apps.add(new AppDetails(
+                tag.getElementsByTag("img").first(),
+                tag.getElementsByTag("a").first()
+            ));
         return apps;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList apps) {
+        super.onPostExecute(apps);
+        // TODO: Display apps details in a RecycleView
     }
 }
