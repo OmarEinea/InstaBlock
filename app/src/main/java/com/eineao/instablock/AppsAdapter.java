@@ -29,7 +29,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     @Override
     public AppsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.apps_row, parent, false);
+                .inflate(R.layout.app_item, parent, false);
         return new AppsViewHolder(v);
     }
 
@@ -37,14 +37,9 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     public void onBindViewHolder(AppsViewHolder holder, int position) {
         AppDetails app = apps.get(position);
 
-        Glide
-                .with(mContext)
-                .load(app.getIconSubURL())
-                .into(holder.mIcon);
+        Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
 
         holder.mAppName.setText(app.getAppTitle());
-        holder.mImgUrl.setText(app.getIconSubURL());
-        Log.i("URL", app.getIconSubURL());
         Log.i("Adapter", "Was Called " + position);
     }
 
@@ -54,13 +49,12 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     }
 
     public class AppsViewHolder extends RecyclerView.ViewHolder{
-        private TextView mAppName, mImgUrl;
+        private TextView mAppName;
         private ImageView mIcon;
         public AppsViewHolder(View itemView) {
             super(itemView);
-            mIcon = itemView.findViewById(R.id.icon);
-            mAppName = itemView.findViewById(R.id.appName);
-            mImgUrl = itemView.findViewById(R.id.imgUrl);
+            mIcon = itemView.findViewById(R.id.app_icon);
+            mAppName = itemView.findViewById(R.id.app_name);
         }
     }
 }

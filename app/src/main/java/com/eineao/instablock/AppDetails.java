@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
  */
 
 public class AppDetails {
+    private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String appTitle, iconSubURL, packageName;
 
     public AppDetails(String appTitle, String iconSubURL, String packageName) {
@@ -35,6 +36,10 @@ public class AppDetails {
 
     public String getIconSubURL() {
         return iconSubURL;
+    }
+
+    public String getIconURL(int size) {
+        return String.format(ICON_URL, iconSubURL, size);
     }
 
     public void setIconSubURL(String iconSubURL) {

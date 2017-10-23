@@ -3,6 +3,7 @@ package com.eineao.instablock;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -40,13 +41,14 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.search_results);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), 1));
     }
 
 
-    class SearchApps extends AsyncTask<String, Integer, ArrayList> {
+    private class SearchApps extends AsyncTask<String, Integer, ArrayList> {
         private final String URL = "https://play.google.com/store/search?hl=en&c=apps&q=";
 
         @Override
@@ -74,8 +76,6 @@ public class SearchActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(mAdapter);
             Log.i("RecyclerView", "Was Called.");
             super.onPostExecute(apps);
-
-            // TODO: Display apps details in a RecycleView
         }
     }
 }

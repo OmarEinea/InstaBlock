@@ -12,7 +12,7 @@ import com.stericson.RootTools.RootTools;
 /**
  * Created by Omar on 9/27/2017.
  *
- * This class will contain the main logic for blocking apps installation
+ * This class contains the main logic for blocking apps installation
  */
 
 public class InstallReceiver extends BroadcastReceiver {
