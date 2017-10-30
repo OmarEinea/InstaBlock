@@ -1,18 +1,47 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.eineao.instablock.MainActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_margin="@dimen/fab_margin"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_dialog_email"/>
+        android:layout_alignParentBottom="true"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorAccentDark"
+        fab:fab_addButtonPlusIconColor="@android:color/white"
+        fab:fab_labelStyle="@style/fab_labels_style"
+        fab:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_title="From Play Store"
+            fab:fab_icon="@drawable/ic_google_play"
+            fab:fab_colorNormal="@color/lightGrey"
+            fab:fab_colorPressed="@color/grey"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_title="From Installed Apps"
+            fab:fab_icon="@drawable/ic_installed_apps"
+            fab:fab_colorNormal="@color/lightGrey"
+            fab:fab_colorPressed="@color/grey"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_title="Using Package Name"
+            fab:fab_icon="@drawable/ic_package_name"
+            fab:fab_colorNormal="@color/lightGrey"
+            fab:fab_colorPressed="@color/grey"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>
