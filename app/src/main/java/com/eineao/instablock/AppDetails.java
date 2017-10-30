@@ -2,6 +2,8 @@ package com.eineao.instablock;
 
 import org.jsoup.nodes.Element;
 
+import java.util.Locale;
+
 /**
  * Created by Omar on 10/13/2017.
  *
@@ -39,7 +41,7 @@ public class AppDetails {
     }
 
     public String getIconURL(int size) {
-        return String.format(ICON_URL, iconSubURL, size);
+        return String.format(Locale.US, ICON_URL, iconSubURL, size);
     }
 
     public void setIconSubURL(String iconSubURL) {
