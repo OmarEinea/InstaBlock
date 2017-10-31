@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayStoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, SearchActivity.class), SEARCH);
+                startActivityForResult(new Intent(MainActivity.this, PlayStoreActivity.class), SEARCH);
                 mFabMenu.collapse();
             }
         });

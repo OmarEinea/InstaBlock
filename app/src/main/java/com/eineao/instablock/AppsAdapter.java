@@ -2,7 +2,6 @@ package com.eineao.instablock;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,12 @@ import java.util.ArrayList;
  */
 
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder>{
-    private ArrayList<AppDetails> apps;
+    private ArrayList<AppDetails> mApps;
     private Context mContext;
 
-    public AppsAdapter(ArrayList<AppDetails> apps, Context context) {
-        this.apps = apps;
-        this.mContext = context;
+    public AppsAdapter(Context context) {
+        mApps = new ArrayList<>();
+        mContext = context;
     }
 
     @Override
@@ -36,17 +35,24 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
 
     @Override
     public void onBindViewHolder(AppsViewHolder holder, int position) {
-        AppDetails app = apps.get(position);
+        AppDetails app = mApps.get(position);
 
         Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
 
         holder.mAppName.setText(app.getAppTitle());
-        Log.i("Adapter", "Was Called " + position);
     }
 
     @Override
     public int getItemCount() {
-        return apps.size();
+        return mApps.size();
+    }
+
+    public void clearApps() {
+        mApps.clear();
+    }
+
+    public void addApp(AppDetails app) {
+        mApps.add(app);
     }
 
     public class AppsViewHolder extends RecyclerView.ViewHolder{

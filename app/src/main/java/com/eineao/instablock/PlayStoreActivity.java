@@ -7,16 +7,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class SearchActivity extends AppCompatActivity {
+public class PlayStoreActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
     private RecyclerView mRecyclerView;
@@ -25,13 +23,16 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.apps_search);
 
         mSearchView = findViewById(R.id.search_view);
+        mAdapter = new AppsAdapter(this);
+        mRecyclerView = findViewById(R.id.search_results);
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                new SearchApps().execute(query);
+                new PlayStoreFetcher().execute(query);
                 return false;
             }
 
@@ -41,41 +42,41 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView = findViewById(R.id.search_results);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), 1));
+        mRecyclerView.addItemDecoration(
+                new DividerItemDecoration(mRecyclerView.getContext(), 1)
+        );
     }
 
-
-    private class SearchApps extends AsyncTask<String, Integer, ArrayList> {
+    private class PlayStoreFetcher extends AsyncTask<String, Integer, Boolean> {
         private final String URL = "https://play.google.com/store/search?hl=en&c=apps&q=";
 
         @Override
-        protected ArrayList doInBackground(String... strings) {
+        protected Boolean doInBackground(String... strings) {
+            mAdapter.clearApps();
             Elements tags;
+
             try {
                 tags = Jsoup.connect(URL + strings[0]).get().select(".cover");
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return false;
             }
-            ArrayList<AppDetails> apps = new ArrayList<>();
+
             for(Element tag : tags)
-                apps.add(new AppDetails(
+                mAdapter.addApp(new AppDetails(
                         tag.getElementsByTag("img").first(),
                         tag.getElementsByTag("a").first()
                 ));
-            return apps;
+            return true;
         }
 
         @Override
-        protected void onPostExecute(ArrayList apps) {
-            mAdapter = new AppsAdapter(apps, SearchActivity.this);
-
-            mRecyclerView.setAdapter(mAdapter);
-            Log.i("RecyclerView", "Was Called.");
-            super.onPostExecute(apps);
+        protected void onPostExecute(Boolean connected) {
+            mAdapter.notifyDataSetChanged();
+            super.onPostExecute(connected);
         }
     }
 }
