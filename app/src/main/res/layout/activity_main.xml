@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.eineao.instablock.MainActivity">
 
+    <View
+        android:visibility="invisible"
+        android:id="@+id/fab_shade"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/lightTransparent"/>
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
         android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +28,7 @@
         fab:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/play_store_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="From Play Store"
