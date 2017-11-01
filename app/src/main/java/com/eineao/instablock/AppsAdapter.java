@@ -37,7 +37,10 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     public void onBindViewHolder(AppsViewHolder holder, int position) {
         AppDetails app = mApps.get(position);
 
-        Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
+        if(app.getAppIcon() == null)
+            Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
+        else
+            holder.mIcon.setImageDrawable(app.getAppIcon());
 
         holder.mAppName.setText(app.getAppTitle());
     }

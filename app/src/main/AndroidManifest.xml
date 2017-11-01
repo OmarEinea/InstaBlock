@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eineao.instablock">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,11 @@
             android:name=".PlayStoreActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible">
+        </activity>
+
+        <activity
+            android:name=".InstalledAppsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <receiver android:name=".InstallReceiver">

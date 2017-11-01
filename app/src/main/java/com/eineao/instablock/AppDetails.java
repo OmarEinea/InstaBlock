@@ -1,5 +1,7 @@
 package com.eineao.instablock;
 
+import android.graphics.drawable.Drawable;
+
 import org.jsoup.nodes.Element;
 
 import java.util.Locale;
@@ -14,10 +16,11 @@ import java.util.Locale;
 public class AppDetails {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String appTitle, iconSubURL, packageName;
+    private Drawable appIcon = null;
 
-    public AppDetails(String appTitle, String iconSubURL, String packageName) {
+    public AppDetails(String appTitle, Drawable appIcon, String packageName) {
+        this.appIcon = appIcon;
         this.appTitle = appTitle;
-        this.iconSubURL = iconSubURL;
         this.packageName = packageName;
     }
 
@@ -46,6 +49,14 @@ public class AppDetails {
 
     public void setIconSubURL(String iconSubURL) {
         this.iconSubURL = iconSubURL;
+    }
+
+    public Drawable getAppIcon() {
+        return appIcon;
+    }
+
+    public void setAppIcon(Drawable appIcon) {
+        this.appIcon = appIcon;
     }
 
     public String getPackageName() {
