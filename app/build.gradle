@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.eineao.instablock"
         minSdkVersion 15
@@ -28,6 +28,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'org.jsoup:jsoup:1.10.3'
+    compile 'com.google.code.gson:gson:2.7'
 
     compile files('libs/RootTools.jar')
 }

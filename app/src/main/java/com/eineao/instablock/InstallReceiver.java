@@ -16,11 +16,13 @@ import com.stericson.RootTools.RootTools;
  */
 
 public class InstallReceiver extends BroadcastReceiver {
-
+//    private SharedPrefManager mPref;
     @Override
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
+            //Create a Shared Preference Manager to store the names of the blocked apps.
+//            mPref = new SharedPrefManager(context);
             // Uninstall any app after installation (for now)
             uninstallPackage(intent.getDataString().substring(8));
             // Show a toast to indicate that app was uninstalled
@@ -34,6 +36,8 @@ public class InstallReceiver extends BroadcastReceiver {
         if(RootTools.isAccessGiven())
             try { // Try uninstalling the package using PackageManager's "uninstall" command
                 RootTools.getShell(true).add(new Command(0, "pm uninstall " + packageName));
+                //Store the name of the blocked app using Shared Preferences Manager
+                //mPref.saveBlockedApp(packageName);
             } catch (Exception e) { // If command execution fails, record an error of failure
                 Log.e("uninstallPackage()", "Failed to execute uninstall package command");
             }

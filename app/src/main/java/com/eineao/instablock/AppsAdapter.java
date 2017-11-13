@@ -2,11 +2,13 @@ package com.eineao.instablock;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -34,8 +36,8 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
     }
 
     @Override
-    public void onBindViewHolder(AppsViewHolder holder, int position) {
-        AppDetails app = mApps.get(position);
+    public void onBindViewHolder(AppsViewHolder holder, final int position) {
+        final AppDetails app = mApps.get(position);
 
         if(app.getAppIcon() == null)
             Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
@@ -43,6 +45,16 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
             holder.mIcon.setImageDrawable(app.getAppIcon());
 
         holder.mAppName.setText(app.getAppTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SharedPrefManager(mContext).saveBlockedApp(mApps.get(position));
+                Toast.makeText(mContext, app.getAppTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
+
+                Log.i(app.getAppTitle(), "Has been clicked ---- -- ---");
+            }
+        });
     }
 
     @Override

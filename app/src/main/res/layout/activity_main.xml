@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.eineao.instablock.MainActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/blocked_apps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
     <View
         android:visibility="invisible"
         android:id="@+id/fab_shade"
@@ -54,4 +61,6 @@
             fab:fab_colorPressed="@color/grey"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 </RelativeLayout>
