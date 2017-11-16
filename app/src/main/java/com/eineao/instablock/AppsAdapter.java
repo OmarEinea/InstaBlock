@@ -45,7 +45,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
             holder.mIcon.setImageDrawable(app.getAppIcon());
 
         holder.mAppName.setText(app.getAppTitle());
-
+//
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

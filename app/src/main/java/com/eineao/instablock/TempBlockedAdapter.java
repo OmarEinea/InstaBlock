@@ -45,7 +45,7 @@ public class TempBlockedAdapter extends RecyclerView.Adapter<TempBlockedAdapter.
 
         holder.mAppName.setText(app.getAppTitle());
 
-
+//
     }
 
     @Override

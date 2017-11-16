@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * Created by abdulahiosoble on 11/8/17.
  *
+ *
  * This class allows users to store blocked apps.
  */
 
