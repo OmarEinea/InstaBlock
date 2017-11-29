@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,10 +29,12 @@ import java.util.ArrayList;
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder>{
     private ArrayList<AppDetails> mApps;
     private Context mContext;
+    private BlockedAppsDatabase mDB;
 
     public AppsAdapter(Context context) {
         mApps = new ArrayList<>();
         mContext = context;
+        mDB = new BlockedAppsDatabase(context);
     }
 
     @Override
@@ -55,9 +58,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AppBlocker().execute(app);
-                Toast.makeText(mContext, app.getTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
-                ((Activity) mContext).finish();
+                if(mContext.getClass().getSimpleName().equals("MainActivity")) {
+                    Toast.makeText(mContext, app.getTitle() + " is Blocked", Toast.LENGTH_SHORT).show();
+                } else {
+                    new AppBlocker().execute(app);
+                    Toast.makeText(mContext, app.getTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
+                    ((Activity) mContext).finish();
+                }
             }
         });
     }
@@ -73,6 +80,10 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
 
     public void addApp(AppDetails app) {
         mApps.add(app);
+    }
+
+    public void addApps(List<AppDetails> apps) {
+        mApps.addAll(apps);
     }
 
     public class AppsViewHolder extends RecyclerView.ViewHolder{
@@ -105,7 +116,8 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
                     e.printStackTrace();
                 }
 
-            // TODO: Add app to database
+            mDB.addBlockedApp(app);
+            new MainActivity.BlockedAppsFetcher().execute();
             return true;
         }
     }

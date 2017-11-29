@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,13 +12,12 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends AppCompatActivity {
-    private final int SEARCH = 1;
     private View mFabShade;
     private FloatingActionsMenu mFabMenu;
     private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mPackageNameButton;
     private RecyclerView mRecyclerView;
-    private AppsAdapter mAdapter;
-
+    private static AppsAdapter mAdapter;
+    private static BlockedAppsDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         mInstalledAppsButton = findViewById(R.id.installed_apps_button);
         mRecyclerView = findViewById(R.id.blocked_apps);
         mAdapter = new AppsAdapter(this);
+        mDB = new BlockedAppsDatabase(this);
 
         mFabMenu.getChildAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,33 +53,35 @@ public class MainActivity extends AppCompatActivity {
         mPlayStoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, PlayStoreActivity.class), SEARCH);
+                startActivity(new Intent(MainActivity.this, PlayStoreActivity.class));
                 mFabMenu.collapse();
+                mFabShade.setVisibility(View.INVISIBLE);
             }
         });
 
         mInstalledAppsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, InstalledAppsActivity.class), SEARCH);
+                startActivity(new Intent(MainActivity.this, InstalledAppsActivity.class));
                 mFabMenu.collapse();
+                mFabShade.setVisibility(View.INVISIBLE);
             }
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
-        new BlockedAppsFetcher().doInBackground();
+        new BlockedAppsFetcher().execute();
     }
 
-    private class BlockedAppsFetcher extends AsyncTask<Void, Void, Boolean> {
+    public static class BlockedAppsFetcher extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
             mAdapter.clearApps();
+            mAdapter.addApps(mDB.getAllBlockedApp());
             return false;
         }
 

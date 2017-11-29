@@ -1,6 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,9 +9,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/blocked_apps"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"/>
 
     <View
         android:visibility="invisible"
@@ -28,39 +27,38 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        fab:fab_addButtonColorNormal="@color/colorAccent"
-        fab:fab_addButtonColorPressed="@color/colorAccentDark"
-        fab:fab_addButtonPlusIconColor="@android:color/white"
-        fab:fab_labelStyle="@style/fab_labels_style"
-        fab:fab_labelsPosition="left">
+        app:fab_addButtonColorNormal="@color/colorAccent"
+        app:fab_addButtonColorPressed="@color/colorAccentDark"
+        app:fab_addButtonPlusIconColor="@android:color/white"
+        app:fab_labelStyle="@style/fab_labels_style"
+        app:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/play_store_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="From Play Store"
-            fab:fab_icon="@drawable/ic_google_play"
-            fab:fab_colorNormal="@color/lightGrey"
-            fab:fab_colorPressed="@color/grey"/>
+            app:fab_title="From Play Store"
+            app:fab_icon="@drawable/ic_google_play"
+            app:fab_colorNormal="@color/lightGrey"
+            app:fab_colorPressed="@color/grey"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/installed_apps_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="From Installed Apps"
-            fab:fab_icon="@drawable/ic_installed_apps"
-            fab:fab_colorNormal="@color/lightGrey"
-            fab:fab_colorPressed="@color/grey"/>
+            app:fab_title="From Installed Apps"
+            app:fab_icon="@drawable/ic_installed_apps"
+            app:fab_colorNormal="@color/lightGrey"
+            app:fab_colorPressed="@color/grey"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_title="Using Package Name"
-            fab:fab_icon="@drawable/ic_package_name"
-            fab:fab_colorNormal="@color/lightGrey"
-            fab:fab_colorPressed="@color/grey"/>
+            app:fab_title="Using Package Name"
+            app:fab_icon="@drawable/ic_package_name"
+            app:fab_colorNormal="@color/lightGrey"
+            app:fab_colorPressed="@color/grey"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
 
 </RelativeLayout>
