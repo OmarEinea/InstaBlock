@@ -16,13 +16,10 @@ import com.stericson.RootTools.RootTools;
  */
 
 public class InstallReceiver extends BroadcastReceiver {
-//    private SharedPrefManager mPref;
     @Override
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            //Create a Shared Preference Manager to store the names of the blocked apps.
-//            mPref = new SharedPrefManager(context);
             // Uninstall any app after installation (for now)
             uninstallPackage(intent.getDataString().substring(8));
             // Show a toast to indicate that app was uninstalled

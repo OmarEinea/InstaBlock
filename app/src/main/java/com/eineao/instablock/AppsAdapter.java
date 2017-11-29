@@ -1,8 +1,8 @@
 package com.eineao.instablock;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +49,9 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new SharedPrefManager(mContext).saveBlockedApp(mApps.get(position));
-                Toast.makeText(mContext, app.getAppTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
 
-                Log.i(app.getAppTitle(), "Has been clicked ---- -- ---");
+                Toast.makeText(mContext, app.getAppTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
+                ((Activity) mContext).finish();
             }
         });
     }

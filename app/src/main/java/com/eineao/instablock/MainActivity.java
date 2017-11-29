@@ -11,9 +11,6 @@ import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.gson.Gson;
-
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private final int SEARCH = 1;
@@ -21,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionsMenu mFabMenu;
     private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mPackageNameButton;
     private RecyclerView mRecyclerView;
-    private TempBlockedAdapter mAdapter;
+    private AppsAdapter mAdapter;
 
 
     @Override
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mPlayStoreButton = findViewById(R.id.play_store_button);
         mInstalledAppsButton = findViewById(R.id.installed_apps_button);
         mRecyclerView = findViewById(R.id.blocked_apps);
-        mAdapter = new TempBlockedAdapter(this);
+        mAdapter = new AppsAdapter(this);
 
         mFabMenu.getChildAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,20 +81,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             mAdapter.clearApps();
-            Map<String, String> result;
-            result = new SharedPrefManager(getApplicationContext()).getBlockedApp();
-
-            if(result != null){
-                for (Map.Entry<String, String> entry : result.entrySet())
-                {
-                    Gson gson = new Gson();
-                    AppDetails obj = gson.fromJson(entry.getValue(), AppDetails.class);
-                    mAdapter.addApp(obj);
-                }
-                return true;
-            }
-            else
-                return false;
+            return false;
         }
 
         @Override
