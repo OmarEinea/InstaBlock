@@ -16,12 +16,14 @@ import java.util.Locale;
 public class AppDetails {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String appTitle, iconSubURL, packageName;
-    private Drawable appIcon = null;
+    private Drawable appIcon;
+    private boolean installed = false;
 
     public AppDetails(String appTitle, Drawable appIcon, String packageName) {
         this.appIcon = appIcon;
         this.appTitle = appTitle;
         this.packageName = packageName;
+        this.installed = true;
     }
 
     public AppDetails(Element image, Element link) {
@@ -74,5 +76,13 @@ public class AppDetails {
             "iconSubURL='" + iconSubURL + "', " +
             "packageName='" + packageName + "'" +
         "}";
+    }
+
+    public boolean isInstalled() {
+        return installed;
+    }
+
+    public void setInstalled(boolean installed) {
+        this.installed = installed;
     }
 }
