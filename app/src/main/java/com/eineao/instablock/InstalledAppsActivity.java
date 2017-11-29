@@ -2,6 +2,8 @@ package com.eineao.instablock;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,10 +65,14 @@ public class InstalledAppsActivity extends AppCompatActivity {
                     appName = app.loadLabel(mPackageManager).toString();
                     if (appName.toLowerCase().contains(strings[0]))
                         mAdapter.addApp(new AppDetails(
-                                appName, app.loadIcon(mPackageManager), app.packageName
+                                appName, getIcon(app), app.packageName
                         ));
                 }
             return true;
+        }
+
+        private Bitmap getIcon(ApplicationInfo app) {
+            return ((BitmapDrawable) app.loadIcon(mPackageManager)).getBitmap();
         }
 
         @Override

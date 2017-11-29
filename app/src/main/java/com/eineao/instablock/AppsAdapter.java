@@ -2,7 +2,8 @@ package com.eineao.instablock;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,17 +46,17 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         final AppDetails app = mApps.get(position);
 
         if(app.isInstalled())
-            holder.mIcon.setImageDrawable(app.getAppIcon());
+            holder.mIcon.setImageBitmap(app.getIcon());
         else
-            Glide.with(mContext).load(app.getIconURL(96)).into(holder.mIcon);
+            Glide.with(mContext).load(app.getIconURL()).into(holder.mIcon);
 
-        holder.mAppName.setText(app.getAppTitle());
+        holder.mAppName.setText(app.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new AppBlocker().execute(app);
-                Toast.makeText(mContext, app.getAppTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, app.getTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
                 ((Activity) mContext).finish();
             }
         });
@@ -95,11 +96,11 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
                 app.setInstalled(false);
             } else
                 try {
-                    URL iconURL = new URL(app.getIconURL(96));
+                    URL iconURL = new URL(app.getIconURL());
                     InputStream iconStream = (InputStream) iconURL.getContent();
-                    Drawable icon = Drawable.createFromStream(iconStream, "src");
-                    app.setAppIcon(icon);
-                    app.setIconSubURL(null);
+                    Bitmap icon = BitmapFactory.decodeStream(iconStream);
+                    app.setIcon(icon);
+                    app.setIconURL(null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

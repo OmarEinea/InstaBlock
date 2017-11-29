@@ -1,6 +1,6 @@
 package com.eineao.instablock;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 import org.jsoup.nodes.Element;
 
@@ -10,79 +10,75 @@ import java.util.Locale;
  * Created by Omar on 10/13/2017.
  *
  * This class contains apps' basic details like
- * its title, icon url and package name
+ * its title, icon and package name
  */
 
 public class AppDetails {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
-    private String appTitle, iconSubURL, packageName;
-    private Drawable appIcon;
-    private boolean installed = false;
+    private String mTitle, mIconURL, mPackageName;
+    private boolean mInstalled = false;
+    private Bitmap mIcon;
 
-    public AppDetails(String appTitle, Drawable appIcon, String packageName) {
-        this.appIcon = appIcon;
-        this.appTitle = appTitle;
-        this.packageName = packageName;
-        this.installed = true;
+    public AppDetails(String title, Bitmap icon, String packageName) {
+        mTitle = title;
+        mIcon = icon;
+        mPackageName = packageName;
+        mInstalled = true;
     }
 
     public AppDetails(Element image, Element link) {
-        String icon = image.attr("src"), url = link.attr("href");
-        appTitle = image.attr("alt");
-        iconSubURL = icon.substring(icon.lastIndexOf("/") + 1, icon.length() - 8);
-        packageName = url.substring(url.indexOf("=") + 1);
+        String iconURL = image.attr("src"), appURL = link.attr("href");
+        String iconSubURL = iconURL.substring(iconURL.lastIndexOf("/") + 1, iconURL.length() - 8);
+        mIconURL = String.format(Locale.US, ICON_URL, iconSubURL, 96);
+        mTitle = image.attr("alt");
+        mPackageName = appURL.substring(appURL.indexOf("=") + 1);
     }
 
-    public String getAppTitle() {
-        return appTitle;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public void setAppTitle(String appTitle) {
-        this.appTitle = appTitle;
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
-    public String getIconSubURL() {
-        return iconSubURL;
+    public String getIconURL() {
+        return mIconURL;
     }
 
-    public String getIconURL(int size) {
-        return String.format(Locale.US, ICON_URL, iconSubURL, size);
+    public void setIconURL(String iconURL) {
+        mIconURL = iconURL;
     }
 
-    public void setIconSubURL(String iconSubURL) {
-        this.iconSubURL = iconSubURL;
+    public Bitmap getIcon() {
+        return mIcon;
     }
 
-    public Drawable getAppIcon() {
-        return appIcon;
-    }
-
-    public void setAppIcon(Drawable appIcon) {
-        this.appIcon = appIcon;
+    public void setIcon(Bitmap icon) {
+        mIcon = icon;
     }
 
     public String getPackageName() {
-        return packageName;
+        return mPackageName;
     }
 
     public void setPackageName(String packageName) {
-        this.packageName = packageName;
+        mPackageName = packageName;
+    }
+
+    public boolean isInstalled() {
+        return mInstalled;
+    }
+
+    public void setInstalled(boolean installed) {
+        mInstalled = installed;
     }
 
     @Override
     public String toString() {
         return "AppDetails {" +
-            "appTitle='" + appTitle + "', " +
-            "iconSubURL='" + iconSubURL + "', " +
-            "packageName='" + packageName + "'" +
+            "appTitle='" + mTitle + "', " +
+            "packageName='" + mPackageName + "'" +
         "}";
-    }
-
-    public boolean isInstalled() {
-        return installed;
-    }
-
-    public void setInstalled(boolean installed) {
-        this.installed = installed;
     }
 }
