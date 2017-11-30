@@ -23,11 +23,16 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
     private final static int DATABASE_VERSION = 1;
     private final static String DATABASE_NAME = "blocked_apps",
         PACKAGE_NAME = "package_name", TITLE = "title", ICON = "icon",
-        DATABASE_CREATE_SCHEMA = "create table " + DATABASE_NAME + " (" +
-            PACKAGE_NAME + " text primary key," +
-            TITLE + " text," +
-            ICON + " text" +
-        ");";
+        DROP_TABLE_IF_EXISTED = "drop table if exists " + DATABASE_NAME,
+        QUERY_ALL_APPS = "select * from " + DATABASE_NAME,
+        QUERY_AN_APP = String.format(
+            "select %s,%s from %s where %s=?",
+            PACKAGE_NAME, TITLE, DATABASE_NAME, PACKAGE_NAME
+        ),
+        DATABASE_CREATE_SCHEMA = String.format(
+            "create table %s (%s text primary key,%s text,%s text);",
+            DATABASE_NAME, PACKAGE_NAME, TITLE, ICON
+        );
 
     public BlockedAppsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,7 +45,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + DATABASE_NAME);
+        db.execSQL(DROP_TABLE_IF_EXISTED);
         onCreate(db);
     }
 
@@ -62,7 +67,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
     public List<AppDetails> getAllBlockedApp() {
         SQLiteDatabase db = getWritableDatabase();
         List<AppDetails> blockedApps = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select * from " + DATABASE_NAME, null);
+        Cursor cursor = db.rawQuery(QUERY_ALL_APPS, null);
 
         if(cursor.moveToFirst())
             do
@@ -82,10 +87,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     public AppDetails getBlockedApp(String packageName) {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery(
-            "select * from " + DATABASE_NAME + " where " + PACKAGE_NAME + "='" + packageName + "'",
-            null
-        );
+        Cursor cursor = db.rawQuery(QUERY_AN_APP, new String[] {packageName});
         AppDetails app = null;
         if(cursor.moveToFirst())
             app = new AppDetails(cursor.getString(1), cursor.getString(0));

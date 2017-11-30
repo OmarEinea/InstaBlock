@@ -20,12 +20,15 @@ public class InstallReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
+            // Check if installed app is among the blocked apps
             AppDetails app = MainActivity.mDB.getBlockedApp(intent.getDataString().substring(8));
+            // If it is
             if(app != null) {
-                // Uninstall any app after installation (for now)
+                // Uninstall the blocked app
                 uninstallPackage(app.getPackageName());
-                // Show a toast to indicate that app was uninstalled
+                // Show a toast to indicate that the blocked app was uninstalled
                 Toast.makeText(context, "InstaBlock uninstalled " + app.getTitle(), Toast.LENGTH_LONG).show();
+                Log.i("InstaBlock", app.getTitle() + "was uninstalled");
             }
         }
     }

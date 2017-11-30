@@ -1,7 +1,9 @@
 package com.eineao.instablock;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -58,12 +60,29 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mContext.getClass().getSimpleName().equals("MainActivity")) {
-                    Toast.makeText(mContext, app.getTitle() + " is Blocked", Toast.LENGTH_SHORT).show();
+                String currentActivity = mContext.getClass().getSimpleName();
+                if(currentActivity.startsWith("MainActivity")) {
+                    Toast.makeText(mContext, app.getTitle() + " is blocked", Toast.LENGTH_SHORT).show();
                 } else {
-                    new AppBlocker().execute(app);
-                    Toast.makeText(mContext, app.getTitle() + " Has been Blocked", Toast.LENGTH_SHORT).show();
-                    ((Activity) mContext).finish();
+                    String message = String.format(
+                        "Do you really want to%s block\n%s ?",
+                        currentActivity.startsWith("Install") ? " uninstall and": "", app.getTitle()
+                    );
+                    new AlertDialog.Builder(mContext)
+                        .setTitle("Block App")
+                        .setMessage(message)
+                        .setIcon(R.drawable.ic_warning_black)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                new AppBlocker().execute(app);
+                                Toast.makeText(mContext,
+                                    app.getTitle() + " has been blocked!",
+                                    Toast.LENGTH_SHORT
+                                ).show();
+                                ((Activity) mContext).finish();
+                            }
+                        }).show();
                 }
             }
         });
