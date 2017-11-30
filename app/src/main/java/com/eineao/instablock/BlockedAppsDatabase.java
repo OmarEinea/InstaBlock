@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;
     private final static String DATABASE_NAME = "blocked_apps",
-        PACKAGE_NAME = "app_name", TITLE = "title", ICON = "icon",
+        PACKAGE_NAME = "package_name", TITLE = "title", ICON = "icon",
         DATABASE_CREATE_SCHEMA = "create table " + DATABASE_NAME + " (" +
             PACKAGE_NAME + " text primary key," +
             TITLE + " text," +
@@ -61,17 +60,16 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
     }
 
     public List<AppDetails> getAllBlockedApp() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         List<AppDetails> blockedApps = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + DATABASE_NAME, null);
 
         if(cursor.moveToFirst())
-            do {
-                Log.d("DB APP", cursor.getString(1) + " " + cursor.getString(0));
+            do
                 blockedApps.add(new AppDetails(
                         cursor.getString(1), getIcon(cursor.getBlob(2)), cursor.getString(0)
                 ));
-            } while(cursor.moveToNext());
+            while(cursor.moveToNext());
 
         cursor.close();
         db.close();
@@ -80,5 +78,19 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     private Bitmap getIcon(byte[] bytes) {
         return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+    }
+
+    public AppDetails getBlockedApp(String packageName) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(
+            "select * from " + DATABASE_NAME + " where " + PACKAGE_NAME + "='" + packageName + "'",
+            null
+        );
+        AppDetails app = null;
+        if(cursor.moveToFirst())
+            app = new AppDetails(cursor.getString(1), cursor.getString(0));
+        cursor.close();
+        db.close();
+        return app;
     }
 }

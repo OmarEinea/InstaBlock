@@ -15,9 +15,14 @@ import java.util.Locale;
 
 public class AppDetails {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
-    private String mTitle, mIconURL, mPackageName;
+    private String mTitle, mPackageName, mIconURL = null;
     private boolean mInstalled = false;
-    private Bitmap mIcon;
+    private Bitmap mIcon = null;
+
+    public AppDetails(String title, String packageName) {
+        mTitle = title;
+        mPackageName = packageName;
+    }
 
     public AppDetails(String title, Bitmap icon, String packageName) {
         mTitle = title;

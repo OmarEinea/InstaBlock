@@ -20,10 +20,13 @@ public class InstallReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            // Uninstall any app after installation (for now)
-            uninstallPackage(intent.getDataString().substring(8));
-            // Show a toast to indicate that app was uninstalled
-            Toast.makeText(context, "InstaBlock uninstalled an app", Toast.LENGTH_LONG).show();
+            AppDetails app = MainActivity.mDB.getBlockedApp(intent.getDataString().substring(8));
+            if(app != null) {
+                // Uninstall any app after installation (for now)
+                uninstallPackage(app.getPackageName());
+                // Show a toast to indicate that app was uninstalled
+                Toast.makeText(context, "InstaBlock uninstalled " + app.getTitle(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -33,9 +36,8 @@ public class InstallReceiver extends BroadcastReceiver {
         if(RootTools.isAccessGiven())
             try { // Try uninstalling the package using PackageManager's "uninstall" command
                 RootTools.getShell(true).add(new Command(0, "pm uninstall " + packageName));
-                //Store the name of the blocked app using Shared Preferences Manager
-                //mPref.saveBlockedApp(packageName);
             } catch (Exception e) { // If command execution fails, record an error of failure
+                e.printStackTrace();
                 Log.e("uninstallPackage()", "Failed to execute uninstall package command");
             }
     }

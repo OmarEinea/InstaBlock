@@ -117,7 +117,6 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.AppsViewHolder
                 }
 
             mDB.addBlockedApp(app);
-            new MainActivity.BlockedAppsFetcher().execute();
             return true;
         }
     }

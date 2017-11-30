@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -16,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionsMenu mFabMenu;
     private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mPackageNameButton;
     private RecyclerView mRecyclerView;
-    private static AppsAdapter mAdapter;
-    private static BlockedAppsDatabase mDB;
+    private AppsAdapter mAdapter;
+    public static BlockedAppsDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +74,28 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         new BlockedAppsFetcher().execute();
     }
 
-    public static class BlockedAppsFetcher extends AsyncTask<Void, Void, Boolean> {
+    private class BlockedAppsFetcher extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
             mAdapter.clearApps();
             mAdapter.addApps(mDB.getAllBlockedApp());
-            return false;
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Boolean connected) {
+        protected void onPostExecute(Boolean appsUpdated) {
             mAdapter.notifyDataSetChanged();
-            super.onPostExecute(connected);
+            Log.d("OnResume", "Refreshed blocked apps list");
+            super.onPostExecute(appsUpdated);
         }
     }
 }
