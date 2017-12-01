@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -50,7 +50,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addBlockedApp(AppDetails app) {
+    public void addBlockedApp(AppModel app) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         app.getIcon().compress(Bitmap.CompressFormat.PNG, 1, stream);
 
@@ -65,20 +65,20 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteBlockedApp(AppDetails app) {
+    public void deleteBlockedApp(AppModel app) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(DATABASE_NAME, PACKAGE_NAME + "=?", new String[]{app.getPackageName()});
         db.close();
     }
 
-    public void loadAllBlockedApps(List<AppDetails> blockedApps) {
+    public void loadAllBlockedApps(List<AppModel> blockedApps) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(QUERY_ALL_APPS, null);
 
         blockedApps.clear();
         if(cursor.moveToFirst())
             do
-                blockedApps.add(new AppDetails(
+                blockedApps.add(new AppModel(
                         cursor.getString(1), getIcon(cursor.getBlob(2)), cursor.getString(0)
                 ));
             while(cursor.moveToNext());
@@ -91,12 +91,12 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
     }
 
-    public AppDetails getBlockedApp(String packageName) {
+    public AppModel getBlockedApp(String packageName) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(QUERY_AN_APP, new String[] {packageName});
-        AppDetails app = null;
+        AppModel app = null;
         if(cursor.moveToFirst())
-            app = new AppDetails(cursor.getString(1), null, cursor.getString(0));
+            app = new AppModel(cursor.getString(1), null, cursor.getString(0));
         cursor.close();
         db.close();
         return app;

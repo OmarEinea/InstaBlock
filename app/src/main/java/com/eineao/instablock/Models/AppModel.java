@@ -13,18 +13,18 @@ import java.util.Locale;
  * its title, icon and package name
  */
 
-public class AppDetails {
+public class AppModel {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String mTitle, mPackageName, mIconURL = null;
     private Bitmap mIcon = null;
 
-    public AppDetails(String title, Bitmap icon, String packageName) {
+    public AppModel(String title, Bitmap icon, String packageName) {
         mTitle = title;
         mIcon = icon;
         mPackageName = packageName;
     }
 
-    public AppDetails(Element image, Element link) {
+    public AppModel(Element image, Element link) {
         String iconURL = image.attr("src"), appURL = link.attr("href");
         String iconSubURL = iconURL.substring(iconURL.lastIndexOf("/") + 1, iconURL.length() - 8);
         mIconURL = String.format(Locale.US, ICON_URL, iconSubURL, 96);
@@ -66,7 +66,7 @@ public class AppDetails {
 
     @Override
     public String toString() {
-        return "AppDetails {" +
+        return "AppModel {" +
             "appTitle='" + mTitle + "', " +
             "packageName='" + mPackageName + "'" +
         "}";

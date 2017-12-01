@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
@@ -24,7 +24,7 @@ public class InstallReceiver extends BroadcastReceiver {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
             // Check if installed app is among the blocked apps
-            AppDetails app = new BlockedAppsDatabase(context).getBlockedApp(intent.getDataString().substring(8));
+            AppModel app = new BlockedAppsDatabase(context).getBlockedApp(intent.getDataString().substring(8));
             // If it is
             if(app != null) {
                 // Uninstall the blocked app

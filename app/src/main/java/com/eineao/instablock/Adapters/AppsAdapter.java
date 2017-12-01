@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
 import com.eineao.instablock.R;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public abstract class AppsAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
-    protected ArrayList<AppDetails> mApps;
+    protected ArrayList<AppModel> mApps;
     protected Context mContext;
     protected BlockedAppsDatabase mDB;
 
@@ -37,7 +37,7 @@ public abstract class AppsAdapter<VH extends RecyclerView.ViewHolder> extends Re
         mApps.clear();
     }
 
-    public void addApp(AppDetails app) {
+    public void addApp(AppModel app) {
         mApps.add(app);
     }
 

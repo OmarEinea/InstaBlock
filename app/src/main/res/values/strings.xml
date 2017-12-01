@@ -5,6 +5,6 @@
     <string name="timer">Timer</string>
     <string name="info">Info</string>
     <string name="blocked_apps_tab">Blocked Apps</string>
-    <string name="blocked_keywords_tab">Blocked Keywords</string>
+    <string name="filters_tab">Filters</string>
     <string name="action_settings">Settings</string>
 </resources>

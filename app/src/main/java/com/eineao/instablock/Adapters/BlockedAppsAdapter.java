@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.R;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -32,7 +32,7 @@ public class BlockedAppsAdapter extends AppsAdapter<BlockedAppsAdapter.Expandabl
 
     @Override
     public void onBindViewHolder(final ExpandableAppViewHolder holder, int position) {
-        final AppDetails app = mApps.get(position);
+        final AppModel app = mApps.get(position);
 
         holder.mIcon.setImageBitmap(app.getIcon());
         holder.mTitle.setText(app.getTitle());

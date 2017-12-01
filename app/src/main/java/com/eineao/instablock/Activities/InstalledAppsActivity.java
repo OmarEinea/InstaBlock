@@ -13,7 +13,7 @@ import android.support.v7.widget.SearchView;
 
 import com.eineao.instablock.Adapters.AppsAdapter;
 import com.eineao.instablock.Adapters.SearchAppsAdapter;
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.R;
 
 import java.util.List;
@@ -69,7 +69,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
                 if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                     appName = app.loadLabel(mPackageManager).toString();
                     if (appName.toLowerCase().contains(strings[0]))
-                        mAdapter.addApp(new AppDetails(
+                        mAdapter.addApp(new AppModel(
                                 appName, getIcon(app), app.packageName
                         ));
                 }

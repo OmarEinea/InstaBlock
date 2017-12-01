@@ -9,7 +9,7 @@ import android.support.v7.widget.SearchView;
 
 import com.eineao.instablock.Adapters.AppsAdapter;
 import com.eineao.instablock.Adapters.SearchAppsAdapter;
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.R;
 
 import org.jsoup.Jsoup;
@@ -69,7 +69,7 @@ public class PlayStoreActivity extends AppCompatActivity {
             }
 
             for(Element tag : tags)
-                mAdapter.addApp(new AppDetails(
+                mAdapter.addApp(new AppModel(
                         tag.getElementsByTag("img").first(),
                         tag.getElementsByTag("a").first()
                 ));

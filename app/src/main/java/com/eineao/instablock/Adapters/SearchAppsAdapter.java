@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
-import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.InstallReceiver;
 import com.eineao.instablock.R;
 
@@ -43,7 +43,7 @@ public class SearchAppsAdapter extends AppsAdapter<AppViewHolder> {
 
     @Override
     public void onBindViewHolder(AppViewHolder holder, final int position) {
-        final AppDetails app = mApps.get(position);
+        final AppModel app = mApps.get(position);
 
         if(mInstalledApps)
             holder.mIcon.setImageBitmap(app.getIcon());
@@ -77,11 +77,11 @@ public class SearchAppsAdapter extends AppsAdapter<AppViewHolder> {
         });
     }
 
-    private class AppBlocker extends AsyncTask<AppDetails, Integer, Boolean> {
+    private class AppBlocker extends AsyncTask<AppModel, Integer, Boolean> {
 
         @Override
-        protected Boolean doInBackground(AppDetails... apps) {
-            AppDetails app = apps[0];
+        protected Boolean doInBackground(AppModel... apps) {
+            AppModel app = apps[0];
             if(mInstalledApps)
                 InstallReceiver.uninstallPackage(app.getPackageName());
             else
