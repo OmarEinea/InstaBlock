@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/unblock_btn"
@@ -29,20 +30,22 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageView
                     android:src="@drawable/ic_unblock"
                     android:tint="@color/darkGrey"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginRight="6dp"/>
+                    android:layout_marginRight="6dp"
+                    android:layout_marginEnd="6dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
-                    android:text="Unblock"/>
+                    android:text="@string/unblock"/>
 
             </LinearLayout>
 
@@ -55,20 +58,22 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageView
                     android:src="@drawable/ic_timer"
                     android:tint="@color/darkGrey"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
-                    android:text="Timer"/>
+                    android:text="@string/timer"/>
 
             </LinearLayout>
 
@@ -81,20 +86,22 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageView
                     android:src="@drawable/ic_info"
                     android:tint="@color/darkGrey"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
-                    android:text="Info"/>
+                    android:text="@string/info"/>
 
             </LinearLayout>
 

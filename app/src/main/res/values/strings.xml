@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">InstaBlock</string>
     <string name="search_hint">Search applications…</string>
+    <string name="unblock">Unblock</string>
+    <string name="timer">Timer</string>
+    <string name="info">Info</string>
 </resources>
