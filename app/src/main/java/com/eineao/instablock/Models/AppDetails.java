@@ -1,4 +1,4 @@
-package com.eineao.instablock.Helpers;
+package com.eineao.instablock.Models;
 
 import android.graphics.Bitmap;
 

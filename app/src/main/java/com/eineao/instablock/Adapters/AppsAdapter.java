@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eineao.instablock.Helpers.AppDetails;
-import com.eineao.instablock.Helpers.BlockedAppsDatabase;
+import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
 import com.eineao.instablock.R;
 
 import java.util.ArrayList;

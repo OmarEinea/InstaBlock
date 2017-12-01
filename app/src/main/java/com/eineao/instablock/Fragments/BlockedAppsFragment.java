@@ -2,7 +2,6 @@ package com.eineao.instablock.Fragments;
 
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -38,21 +37,7 @@ public class BlockedAppsFragment extends Fragment {
     }
 
     public static void fetchBlockedApps() {
-        new BlockedAppsFetcher().execute();
-    }
-
-    private static class BlockedAppsFetcher extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            mAdapter.loadAllBlockedAppsFromDatabase();
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean appsUpdated) {
-            mAdapter.notifyDataSetChanged();
-            super.onPostExecute(appsUpdated);
-        }
+        mAdapter.loadAllBlockedAppsFromDatabase();
+        mAdapter.notifyDataSetChanged();
     }
 }

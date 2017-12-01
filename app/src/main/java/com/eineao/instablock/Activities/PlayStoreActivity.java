@@ -9,7 +9,7 @@ import android.support.v7.widget.SearchView;
 
 import com.eineao.instablock.Adapters.AppsAdapter;
 import com.eineao.instablock.Adapters.SearchAppsAdapter;
-import com.eineao.instablock.Helpers.AppDetails;
+import com.eineao.instablock.Models.AppDetails;
 import com.eineao.instablock.R;
 
 import org.jsoup.Jsoup;

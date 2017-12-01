@@ -1,4 +1,4 @@
-package com.eineao.instablock.Helpers;
+package com.eineao.instablock.DBHelpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.eineao.instablock.Models.AppDetails;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -60,6 +62,12 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         values.put(ICON, stream.toByteArray());
 
         db.insert(DATABASE_NAME, null, values);
+        db.close();
+    }
+
+    public void deleteBlockedApp(AppDetails app) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(DATABASE_NAME, PACKAGE_NAME + "=?", new String[]{app.getPackageName()});
         db.close();
     }
 

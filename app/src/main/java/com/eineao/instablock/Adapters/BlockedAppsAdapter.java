@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.eineao.instablock.Helpers.AppDetails;
+import com.eineao.instablock.Fragments.BlockedAppsFragment;
+import com.eineao.instablock.Models.AppDetails;
 import com.eineao.instablock.R;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -31,10 +32,19 @@ public class BlockedAppsAdapter extends AppsAdapter<BlockedAppsAdapter.Expandabl
 
     @Override
     public void onBindViewHolder(final ExpandableAppViewHolder holder, int position) {
-        AppDetails app = mApps.get(position);
+        final AppDetails app = mApps.get(position);
 
         holder.mIcon.setImageBitmap(app.getIcon());
         holder.mTitle.setText(app.getTitle());
+        holder.mUnblock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDB.deleteBlockedApp(app);
+                BlockedAppsFragment.fetchBlockedApps();
+                holder.mExpandable.toggle();
+                mPreviousHolder = null;
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +67,7 @@ public class BlockedAppsAdapter extends AppsAdapter<BlockedAppsAdapter.Expandabl
         public ExpandableAppViewHolder(View itemView) {
             super(itemView);
             mExpandable = itemView.findViewById(R.id.expandable);
-
+            mUnblock = itemView.findViewById(R.id.unblock_btn);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.eineao.instablock.Helpers;
+package com.eineao.instablock;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 

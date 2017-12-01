@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
-import com.eineao.instablock.Helpers.AppDetails;
-import com.eineao.instablock.Helpers.InstallReceiver;
+import com.eineao.instablock.Models.AppDetails;
+import com.eineao.instablock.InstallReceiver;
 import com.eineao.instablock.R;
 
 import java.io.IOException;
