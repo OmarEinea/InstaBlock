@@ -21,14 +21,10 @@
 
         <activity
             android:name=".Activities.PlayStoreActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
-        <activity
-            android:name=".Activities.InstalledAppsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".Activities.InstalledAppsActivity"/>
 
         <receiver android:name=".Helpers.InstallReceiver">
             <intent-filter>

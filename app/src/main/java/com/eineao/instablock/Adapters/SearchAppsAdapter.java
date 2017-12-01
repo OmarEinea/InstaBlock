@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.eineao.instablock.Fragments.BlockedAppsFragment;
 import com.eineao.instablock.Helpers.AppDetails;
 import com.eineao.instablock.Helpers.InstallReceiver;
 import com.eineao.instablock.R;
@@ -96,6 +97,12 @@ public class SearchAppsAdapter extends AppsAdapter<AppViewHolder> {
 
             mDB.addBlockedApp(app);
             return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            BlockedAppsFragment.fetchBlockedApps();
+            super.onPostExecute(aBoolean);
         }
     }
 }

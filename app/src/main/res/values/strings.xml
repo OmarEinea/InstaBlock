@@ -4,4 +4,7 @@
     <string name="unblock">Unblock</string>
     <string name="timer">Timer</string>
     <string name="info">Info</string>
+    <string name="blocked_apps_tab">Blocked Apps</string>
+    <string name="blocked_filters_tab">Blocked Filters</string>
+    <string name="action_settings">Settings</string>
 </resources>
