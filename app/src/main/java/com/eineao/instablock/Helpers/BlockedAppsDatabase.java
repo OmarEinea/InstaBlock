@@ -1,4 +1,4 @@
-package com.eineao.instablock;
+package com.eineao.instablock.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,11 +63,11 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<AppDetails> getAllBlockedApp() {
+    public void loadAllBlockedApps(List<AppDetails> blockedApps) {
         SQLiteDatabase db = getWritableDatabase();
-        List<AppDetails> blockedApps = new ArrayList<>();
         Cursor cursor = db.rawQuery(QUERY_ALL_APPS, null);
 
+        blockedApps.clear();
         if(cursor.moveToFirst())
             do
                 blockedApps.add(new AppDetails(
@@ -78,7 +77,6 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        return blockedApps;
     }
 
     private Bitmap getIcon(byte[] bytes) {
@@ -90,7 +88,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(QUERY_AN_APP, new String[] {packageName});
         AppDetails app = null;
         if(cursor.moveToFirst())
-            app = new AppDetails(cursor.getString(1), cursor.getString(0));
+            app = new AppDetails(cursor.getString(1), null, cursor.getString(0));
         cursor.close();
         db.close();
         return app;

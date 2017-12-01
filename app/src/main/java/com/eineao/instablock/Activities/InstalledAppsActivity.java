@@ -1,4 +1,4 @@
-package com.eineao.instablock;
+package com.eineao.instablock.Activities;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+
+import com.eineao.instablock.Adapters.AppsAdapter;
+import com.eineao.instablock.Adapters.SearchAppsAdapter;
+import com.eineao.instablock.Helpers.AppDetails;
+import com.eineao.instablock.R;
 
 import java.util.List;
 
@@ -27,7 +32,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
         setContentView(R.layout.apps_search);
 
         mSearchView = findViewById(R.id.search_view);
-        mAdapter = new AppsAdapter(this);
+        mAdapter = new SearchAppsAdapter(this, true);
         mRecyclerView = findViewById(R.id.search_results);
         mPackageManager = getApplicationContext().getPackageManager();
         mInstalledApps = mPackageManager.getInstalledApplications(0);

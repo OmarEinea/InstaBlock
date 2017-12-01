@@ -1,4 +1,4 @@
-package com.eineao.instablock;
+package com.eineao.instablock.Activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+
+import com.eineao.instablock.Adapters.AppsAdapter;
+import com.eineao.instablock.Adapters.SearchAppsAdapter;
+import com.eineao.instablock.Helpers.AppDetails;
+import com.eineao.instablock.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -25,7 +30,7 @@ public class PlayStoreActivity extends AppCompatActivity {
         setContentView(R.layout.apps_search);
 
         mSearchView = findViewById(R.id.search_view);
-        mAdapter = new AppsAdapter(this);
+        mAdapter = new SearchAppsAdapter(this, false);
         mRecyclerView = findViewById(R.id.search_results);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

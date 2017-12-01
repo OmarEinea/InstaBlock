@@ -1,4 +1,4 @@
-package com.eineao.instablock;
+package com.eineao.instablock.Helpers;
 
 import android.graphics.Bitmap;
 
@@ -16,19 +16,12 @@ import java.util.Locale;
 public class AppDetails {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String mTitle, mPackageName, mIconURL = null;
-    private boolean mInstalled = false;
     private Bitmap mIcon = null;
-
-    public AppDetails(String title, String packageName) {
-        mTitle = title;
-        mPackageName = packageName;
-    }
 
     public AppDetails(String title, Bitmap icon, String packageName) {
         mTitle = title;
         mIcon = icon;
         mPackageName = packageName;
-        mInstalled = true;
     }
 
     public AppDetails(Element image, Element link) {
@@ -69,14 +62,6 @@ public class AppDetails {
 
     public void setPackageName(String packageName) {
         mPackageName = packageName;
-    }
-
-    public boolean isInstalled() {
-        return mInstalled;
-    }
-
-    public void setInstalled(boolean installed) {
-        mInstalled = installed;
     }
 
     @Override

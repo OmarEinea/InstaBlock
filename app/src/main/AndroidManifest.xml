@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -20,17 +20,17 @@
         </activity>
 
         <activity
-            android:name=".PlayStoreActivity"
+            android:name=".Activities.PlayStoreActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
         <activity
-            android:name=".InstalledAppsActivity"
+            android:name=".Activities.InstalledAppsActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <receiver android:name=".InstallReceiver">
+        <receiver android:name=".Helpers.InstallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
                 <data android:scheme="package"/>
