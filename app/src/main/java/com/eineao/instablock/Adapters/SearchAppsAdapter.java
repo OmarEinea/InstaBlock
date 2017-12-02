@@ -39,7 +39,7 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
     @Override
     public AppViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new AppViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.app_view, parent, false));
+                .inflate(R.layout.view_app, parent, false));
     }
 
     @Override

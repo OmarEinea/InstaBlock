@@ -25,7 +25,7 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
     @Override
     public ExpandableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ExpandableViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.expandable_app_view, parent, false));
+                .inflate(R.layout.view_expandable_app, parent, false));
     }
 
     @Override

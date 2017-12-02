@@ -33,7 +33,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
     @Override
     public ExpandableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ExpandableViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.expandable_app_view, parent, false));
+                .inflate(R.layout.view_expandable_app, parent, false));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
 
     public void modifyFilter(final FilterModel filter) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialog = inflater.inflate(R.layout.edit_filter, null);
+        final View dialog = inflater.inflate(R.layout.dialog_modify_filter, null);
         final EditText filterName = dialog.findViewById(R.id.filter_name);
         final EditText keywords = dialog.findViewById(R.id.keywords);
         String action;

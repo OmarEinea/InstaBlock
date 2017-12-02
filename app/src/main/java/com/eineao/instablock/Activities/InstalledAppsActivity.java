@@ -28,7 +28,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.apps_search);
+        setContentView(R.layout.activity_search_apps);
 
         mSearchView = findViewById(R.id.search_view);
         mAdapter = new SearchAppsAdapter(this, true);

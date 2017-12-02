@@ -38,7 +38,7 @@ public class PinManager {
     }
 
     public void registerNewPin() {
-        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.pin_dialog, null);
+        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
         final EditText newPin = dialog.findViewById(R.id.pin);
         final EditText confirmPin = dialog.findViewById(R.id.confirm_pin);
 
@@ -72,7 +72,7 @@ public class PinManager {
     }
 
     public void signInWithPin() {
-        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.pin_dialog, null);
+        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
         dialog.findViewById(R.id.hide_on_sign_in).setVisibility(View.GONE);
         final EditText pin = dialog.findViewById(R.id.pin);
 
