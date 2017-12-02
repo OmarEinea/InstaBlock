@@ -1,6 +1,5 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/expand_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -16,7 +15,7 @@
         android:layout_marginEnd="16dp">
 
         <ImageView
-            android:id="@+id/app_icon_blocked"
+            android:id="@+id/app_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
@@ -27,7 +26,7 @@
         android:maxLines="1"
         android:textSize="20sp"
         android:ellipsize="end"
-        android:id="@+id/app_name_blocked"
+        android:id="@+id/app_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"/>

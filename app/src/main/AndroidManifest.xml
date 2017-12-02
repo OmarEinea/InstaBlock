@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -20,15 +20,11 @@
         </activity>
 
         <activity
-            android:name=".PlayStoreActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".Activities.PlayStoreActivity"
             android:windowSoftInputMode="stateVisible">
         </activity>
 
-        <activity
-            android:name=".InstalledAppsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".Activities.InstalledAppsActivity"/>
 
         <receiver android:name=".InstallReceiver">
             <intent-filter>
