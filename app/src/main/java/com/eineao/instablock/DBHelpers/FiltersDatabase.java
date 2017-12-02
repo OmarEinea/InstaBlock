@@ -17,13 +17,13 @@ import java.util.List;
  * Created by Omar on 12/1/2017.
  */
 
-public class BlockedKeywordsDatabase extends SQLiteOpenHelper {
+public class FiltersDatabase extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;
     private final static String DATABASE_NAME = "blocked_keywords",
         FILTER_ID = "filter_id", FILTER_NAME = "filter_name", KEYWORD = "keyword",
         DROP_TABLE_IF_EXISTED = "drop table if exists " + DATABASE_NAME,
-        QUERY_ALL_FILTERS = "select " + FILTER_NAME + " from " + DATABASE_NAME,
+        QUERY_ALL_FILTERS = "select distinct " + FILTER_NAME + " from " + DATABASE_NAME,
         QUERY_ALL_KEYWORDS = "select distinct " + KEYWORD + " from " + DATABASE_NAME,
         QUERY_FILTER_KEYWORDS = String.format(
                 "select %s from %s where %s=?",
@@ -34,7 +34,7 @@ public class BlockedKeywordsDatabase extends SQLiteOpenHelper {
                 DATABASE_NAME, FILTER_ID, FILTER_NAME, KEYWORD
         );
 
-    public BlockedKeywordsDatabase(Context context) {
+    public FiltersDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -60,22 +60,22 @@ public class BlockedKeywordsDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addBlockedFilter(FilterModel filter) {
+    public void addFilter(FilterModel filter) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        Iterator<String> keyword = filter.getKeywords().iterator();
+        Iterator<String> keywords = filter.getKeywords().iterator();
         String filterName = filter.getName();
 
-        while(keyword.hasNext()) {
+        while(keywords.hasNext()) {
+            ContentValues values = new ContentValues();
             values.put(FILTER_NAME, filterName);
-            values.put(KEYWORD, keyword.next());
+            values.put(KEYWORD, keywords.next());
             db.insert(DATABASE_NAME, null, values);
         }
         db.close();
     }
 
-    public void deleteBlockedFilter(FilterModel filter) {
+    public void deleteFilter(FilterModel filter) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(DATABASE_NAME, FILTER_NAME + "=?", new String[]{filter.getName()});
         db.close();
@@ -87,7 +87,7 @@ public class BlockedKeywordsDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void loadAllBlockedFilters(List<FilterModel> blockedFilters) {
+    public void loadAllFilters(List<FilterModel> blockedFilters) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(QUERY_ALL_FILTERS, null);
 
