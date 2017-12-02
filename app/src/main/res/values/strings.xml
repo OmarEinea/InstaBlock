@@ -11,6 +11,9 @@
     <string name="filter_name_hint">e.g. Proxies</string>
     <string name="blocked_keywords">Blocked Keywords</string>
     <string name="blocked_keywords_hint">proxy, vpn, tor</string>
+    <string name="create_pin">Create PIN</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="enter">Enter</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
     <string name="edit">Edit</string>
