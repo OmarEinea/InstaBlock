@@ -37,4 +37,9 @@ public class BlockedAppsFragment extends Fragment {
         mAdapter.loadAllBlockedAppsFromDatabase();
         mAdapter.notifyDataSetChanged();
     }
+
+    public static void collapseExpendedViews() {
+        if(mAdapter.mPreviousHolder != null)
+            mAdapter.mPreviousHolder.mExpandable.collapse();
+    }
 }

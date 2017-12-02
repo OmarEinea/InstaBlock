@@ -86,6 +86,16 @@
             app:fab_colorNormal="@color/lightGrey"
             app:fab_colorPressed="@color/grey"/>
 
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/filters_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:fab_title="Add a Filter"
+            app:fab_icon="@drawable/ic_add_filter"
+            app:fab_colorNormal="@color/lightGrey"
+            app:fab_colorPressed="@color/grey"/>
+
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </android.support.design.widget.CoordinatorLayout>

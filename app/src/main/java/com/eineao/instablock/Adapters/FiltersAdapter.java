@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.eineao.instablock.DBHelpers.FiltersDatabase;
 import com.eineao.instablock.Fragments.FiltersFragment;
@@ -19,7 +20,7 @@ import com.eineao.instablock.R;
 
 public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
     private FiltersDatabase mDB;
-    private ExpandableViewHolder mPreviousHolder;
+    public ExpandableViewHolder mPreviousHolder = null;
 
     public FiltersAdapter(Context context) {
         super(context);
@@ -36,7 +37,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
     public void onBindViewHolder(final ExpandableViewHolder holder, int position) {
         final FilterModel filter = (FilterModel) mItems.get(position);
 
-        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_filter));
+        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_filter_single));
         holder.mTitle.setText(filter.getName());
         holder.mUnblock.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +48,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
                 mPreviousHolder = null;
             }
         });
+        ((TextView) holder.mInfo.getChildAt(1)).setText("Edit");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

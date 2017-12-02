@@ -22,32 +22,53 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 public class MainActivity extends AppCompatActivity {
     private View mFabShade;
     private FloatingActionsMenu mFabMenu;
-    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton;
+    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mFiltersButton;
     private ViewPager mViewPager;
+    private TabLayout mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
-        // Set the adapter that will return a fragment for each of the two tabs
-        mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
-
-        TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
+        mTabs = findViewById(R.id.tabs);
         mFabMenu = findViewById(R.id.fab_menu);
         mFabShade = findViewById(R.id.fab_shade);
         mPlayStoreButton = findViewById(R.id.play_store_button);
         mInstalledAppsButton = findViewById(R.id.installed_apps_button);
+        mFiltersButton = findViewById(R.id.filters_button);
+
+        // Set the adapter that will return a fragment for each of the two tabs
+        mViewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
+
+        mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabPosition = tab.getPosition();
+                mViewPager.setCurrentItem(tabPosition);
+                switch(tabPosition) {
+                    case 0:
+                        FiltersFragment.collapseExpendedViews();
+                        mFiltersButton.setVisibility(View.GONE);
+                        mPlayStoreButton.setVisibility(View.VISIBLE);
+                        mInstalledAppsButton.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        BlockedAppsFragment.collapseExpendedViews();
+                        mFiltersButton.setVisibility(View.VISIBLE);
+                        mPlayStoreButton.setVisibility(View.GONE);
+                        mInstalledAppsButton.setVisibility(View.GONE);
+                        break;
+                }
+            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
 
         mFabMenu.getChildAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +118,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BlockedAppsFragment.collapseExpendedViews();
+        FiltersFragment.collapseExpendedViews();
+    }
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+    public class TabsPagerAdapter extends FragmentPagerAdapter {
+
+        public TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

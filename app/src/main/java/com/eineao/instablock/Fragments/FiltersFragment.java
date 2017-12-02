@@ -37,4 +37,9 @@ public class FiltersFragment extends Fragment {
         mAdapter.loadAllFiltersFromDatabase();
         mAdapter.notifyDataSetChanged();
     }
+
+    public static void collapseExpendedViews() {
+        if(mAdapter.mPreviousHolder != null)
+            mAdapter.mPreviousHolder.mExpandable.collapse();
+    }
 }

@@ -16,7 +16,7 @@ import com.eineao.instablock.R;
  */
 
 public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
-    private ExpandableViewHolder mPreviousHolder;
+    public ExpandableViewHolder mPreviousHolder;
 
     public BlockedAppsAdapter(Context context) {
         super(context);
