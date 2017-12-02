@@ -11,7 +11,7 @@
         android:id="@+id/expandable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="@color/greyLighten2"
         app:el_duration="300"
         app:el_expanded="false">
 
@@ -35,7 +35,7 @@
 
                 <ImageView
                     android:src="@drawable/ic_unblock"
-                    android:tint="@color/darkGrey"
+                    android:tint="@color/greyDarken2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="6dp"
@@ -63,7 +63,7 @@
 
                 <ImageView
                     android:src="@drawable/ic_timer"
-                    android:tint="@color/darkGrey"
+                    android:tint="@color/greyDarken2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="8dp"
@@ -91,7 +91,7 @@
 
                 <ImageView
                     android:src="@drawable/ic_info"
-                    android:tint="@color/darkGrey"
+                    android:tint="@color/greyDarken2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="8dp"

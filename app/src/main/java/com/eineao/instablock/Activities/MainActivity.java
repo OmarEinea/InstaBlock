@@ -51,15 +51,14 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabPosition = tab.getPosition();
                 mViewPager.setCurrentItem(tabPosition);
+                collapseAllExpendedViews();
                 switch(tabPosition) {
                     case 0:
-                        FiltersFragment.collapseExpendedViews();
                         mFiltersButton.setVisibility(View.GONE);
                         mPlayStoreButton.setVisibility(View.VISIBLE);
                         mInstalledAppsButton.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        BlockedAppsFragment.collapseExpendedViews();
                         mFiltersButton.setVisibility(View.VISIBLE);
                         mPlayStoreButton.setVisibility(View.GONE);
                         mInstalledAppsButton.setVisibility(View.GONE);
@@ -70,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+        mFabMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                collapseAllExpendedViews();
+            }
+            public void onMenuCollapsed() {}
+        });
         mFabMenu.getChildAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
         mPlayStoreButton.setOnClickListener(getSearchAppsOnClickListener(PlayStoreActivity.class));
         mInstalledAppsButton.setOnClickListener(getSearchAppsOnClickListener(InstalledAppsActivity.class));
+        mFiltersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FiltersFragment.mAdapter.modifyFilter(null);
+                mFabMenu.collapse();
+                mFabShade.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     private View.OnClickListener getSearchAppsOnClickListener(final Class targetActivity) {
@@ -101,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
                 mFabShade.setVisibility(View.INVISIBLE);
             }
         };
+    }
+
+    private void collapseAllExpendedViews() {
+        BlockedAppsFragment.collapseExpendedViews();
+        FiltersFragment.collapseExpendedViews();
     }
 
     @Override
@@ -121,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        BlockedAppsFragment.collapseExpendedViews();
-        FiltersFragment.collapseExpendedViews();
+        collapseAllExpendedViews();
     }
 
     public class TabsPagerAdapter extends FragmentPagerAdapter {

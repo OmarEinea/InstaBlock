@@ -15,7 +15,7 @@ import com.eineao.instablock.R;
 
 public class FiltersFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
-    private static FiltersAdapter mAdapter;
+    public static FiltersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -29,13 +29,8 @@ public class FiltersFragment extends Fragment {
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
-        fetchFilters();
-        return view;
-    }
-
-    public static void fetchFilters() {
         mAdapter.loadAllFiltersFromDatabase();
-        mAdapter.notifyDataSetChanged();
+        return view;
     }
 
     public static void collapseExpendedViews() {

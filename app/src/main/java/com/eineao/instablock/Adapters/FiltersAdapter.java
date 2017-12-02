@@ -1,14 +1,17 @@
 package com.eineao.instablock.Adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eineao.instablock.DBHelpers.FiltersDatabase;
-import com.eineao.instablock.Fragments.FiltersFragment;
 import com.eineao.instablock.Models.FilterModel;
 import com.eineao.instablock.Models.VHModels.ExpandableViewHolder;
 import com.eineao.instablock.R;
@@ -43,12 +46,19 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
             @Override
             public void onClick(View view) {
                 mDB.deleteFilter(filter);
-                FiltersFragment.fetchFilters();
+                loadAllFiltersFromDatabase();
                 holder.mExpandable.toggle();
                 mPreviousHolder = null;
             }
         });
-        ((TextView) holder.mInfo.getChildAt(1)).setText("Edit");
+        ((ImageView) holder.mInfo.getChildAt(0)).setImageResource(R.drawable.ic_edit);
+        ((TextView) holder.mInfo.getChildAt(1)).setText(R.string.edit);
+        holder.mInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modifyFilter(filter);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,5 +72,37 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
 
     public void loadAllFiltersFromDatabase() {
         mDB.loadAllFilters(mItems);
+        notifyDataSetChanged();
+    }
+
+    public void modifyFilter(final FilterModel filter) {
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialog = inflater.inflate(R.layout.edit_filter, null);
+        final EditText filterName = dialog.findViewById(R.id.filter_name);
+        final EditText keywords = dialog.findViewById(R.id.keywords);
+        String action;
+        if(filter != null) {
+            filterName.setText(filter.getName());
+            keywords.setText(filter.getKeywordsString());
+            action = mContext.getResources().getString(R.string.edit);
+        } else action = mContext.getResources().getString(R.string.add);
+        new AlertDialog.Builder(mContext)
+            .setTitle(action + " a Filter")
+            .setIcon(R.drawable.ic_filter_multi)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(action, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(filter != null)
+                        mDB.deleteFilter(filter);
+                    mDB.addFilter(
+                        new FilterModel(
+                            filterName.getText().toString(),
+                            keywords.getText().toString()
+                        )
+                    );
+                    loadAllFiltersFromDatabase();
+                }
+            }).setView(dialog).create().show();
     }
 }
