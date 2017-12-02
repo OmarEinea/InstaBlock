@@ -11,7 +11,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
-import com.eineao.instablock.Adapters.AppsAdapter;
 import com.eineao.instablock.Adapters.SearchAppsAdapter;
 import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.R;
@@ -22,7 +21,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
     private RecyclerView mRecyclerView;
-    private AppsAdapter mAdapter;
+    private SearchAppsAdapter mAdapter;
     private PackageManager mPackageManager;
     private List<ApplicationInfo> mInstalledApps;
 

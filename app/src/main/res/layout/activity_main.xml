@@ -86,14 +86,6 @@
             app:fab_colorNormal="@color/lightGrey"
             app:fab_colorPressed="@color/grey"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_title="Using Package Name"
-            app:fab_icon="@drawable/ic_package_name"
-            app:fab_colorNormal="@color/lightGrey"
-            app:fab_colorPressed="@color/grey"/>
-
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </android.support.design.widget.CoordinatorLayout>

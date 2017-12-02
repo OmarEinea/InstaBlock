@@ -26,6 +26,7 @@ public class FilterModel {
 
     public FilterModel(String filterName, Cursor keywords) {
         mName = filterName;
+        mKeywords = new ArrayList<>();
         if(keywords.moveToFirst())
             do mKeywords.add(keywords.getString(0));
             while(keywords.moveToNext());

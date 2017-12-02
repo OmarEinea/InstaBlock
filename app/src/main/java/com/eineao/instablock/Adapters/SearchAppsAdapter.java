@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
-import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.InstallReceiver;
+import com.eineao.instablock.Models.AppModel;
+import com.eineao.instablock.Models.VHModels.AppViewHolder;
 import com.eineao.instablock.R;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.net.URL;
  * Created by Omar on 11/30/2017.
  */
 
-public class SearchAppsAdapter extends AppsAdapter<AppViewHolder> {
+public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
     private boolean mInstalledApps;
 
     public SearchAppsAdapter(Context context, boolean installedApps) {
@@ -43,7 +44,7 @@ public class SearchAppsAdapter extends AppsAdapter<AppViewHolder> {
 
     @Override
     public void onBindViewHolder(AppViewHolder holder, final int position) {
-        final AppModel app = mApps.get(position);
+        final AppModel app = (AppModel) mItems.get(position);
 
         if(mInstalledApps)
             holder.mIcon.setImageBitmap(app.getIcon());

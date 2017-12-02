@@ -18,15 +18,12 @@ public class FiltersFragment extends Fragment {
     private static FiltersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
-    public FiltersFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.blocked_items_list, container, false);
-        mRecyclerView = view.findViewById(R.id.blocked_apps);
         mAdapter = new FiltersAdapter(view.getContext());
+        mRecyclerView = view.findViewById(R.id.blocked_apps);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(

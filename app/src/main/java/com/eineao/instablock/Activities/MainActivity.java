@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
+import com.eineao.instablock.Fragments.FiltersFragment;
 import com.eineao.instablock.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -21,7 +22,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 public class MainActivity extends AppCompatActivity {
     private View mFabShade;
     private FloatingActionsMenu mFabMenu;
-    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mPackageNameButton;
+    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton;
     private ViewPager mViewPager;
 
     @Override
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new BlockedAppsFragment();
                 case 1:
-                    return new Fragment();
+                    return new FiltersFragment();
             }
             return null;
         }

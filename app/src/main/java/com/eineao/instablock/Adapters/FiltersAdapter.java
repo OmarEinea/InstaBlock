@@ -17,7 +17,7 @@ import com.eineao.instablock.R;
  * Created by Omar on 11/30/2017.
  */
 
-public class FiltersAdapter extends AppsAdapter<ExpandableViewHolder> {
+public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
     private FiltersDatabase mDB;
     private ExpandableViewHolder mPreviousHolder;
 
