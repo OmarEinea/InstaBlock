@@ -20,4 +20,5 @@
     <string name="new_pin">New PIN</string>
     <string name="pin_hint">1234</string>
     <string name="confirm_pin">Confirm PIN</string>
+    <string name="change_pin">Change PIN</string>
 </resources>

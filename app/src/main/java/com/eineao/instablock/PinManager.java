@@ -3,6 +3,7 @@ package com.eineao.instablock;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,9 @@ public class PinManager {
     private SharedPreferences mStorage;
     private Activity mActivity;
 
-    public PinManager(Activity activity) {
-        mActivity = activity;
-        mStorage = activity.getPreferences(Context.MODE_PRIVATE);
+    public PinManager(Context mContext, Activity mActivity) {
+        this.mActivity = mActivity;
+        mStorage = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
     public void setPin(String pin) {
@@ -71,7 +72,7 @@ public class PinManager {
         showSoftKeyboard(newPin);
     }
 
-    public void signInWithPin() {
+    public void signInWithPin(final boolean change) {
         View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
         dialog.findViewById(R.id.hide_on_sign_in).setVisibility(View.GONE);
         final EditText pin = dialog.findViewById(R.id.pin);
@@ -82,8 +83,16 @@ public class PinManager {
             @Override
             public void onClick(View view) {
                 if(getPin().equals(pin.getText().toString())) {
-                    Toast.makeText(mActivity, "Welcome back!", Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
+
+                    if(change){
+                        clearPin();
+                        registerNewPin();
+                    }
+                    else{
+                        Toast.makeText(mActivity, "Welcome back!", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Toast.makeText(mActivity, "Wrong PIN", Toast.LENGTH_SHORT).show();
                     pin.setText("");
@@ -121,5 +130,9 @@ public class PinManager {
                         .showSoftInput(editText, 0);
             }
         }, 300);
+    }
+
+    public void changePin(){
+
     }
 }

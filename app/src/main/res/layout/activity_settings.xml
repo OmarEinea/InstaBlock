@@ -33,6 +33,7 @@
         android:gravity="center|left"
         android:textSize="22sp"
         android:text="@string/change_pin"
+        android:padding="10dp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:clickable="true" />
 
