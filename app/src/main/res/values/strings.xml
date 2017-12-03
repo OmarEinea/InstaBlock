@@ -6,7 +6,6 @@
     <string name="info">Info</string>
     <string name="blocked_apps_tab">Blocked Apps</string>
     <string name="filters_tab">Filters</string>
-    <string name="action_settings">Settings</string>
     <string name="filter_name">Filter Name</string>
     <string name="filter_name_hint">e.g. Proxies</string>
     <string name="blocked_keywords">Blocked Keywords</string>

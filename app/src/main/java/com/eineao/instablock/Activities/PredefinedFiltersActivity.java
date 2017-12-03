@@ -1,8 +1,8 @@
 package com.eineao.instablock.Activities;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 
@@ -15,7 +15,7 @@ import com.eineao.instablock.R;
  * Created by Omar on 12/3/2017.
  */
 
-public class PredefinedFiltersActivity extends Activity {
+public class PredefinedFiltersActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private FiltersAdapter mAdapter;

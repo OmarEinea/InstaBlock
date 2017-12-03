@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(mPinManager.getPin().isEmpty())
-            mPinManager.registerNewPin();
+            mPinManager.registerNewPin(false);
         else
             mPinManager.signInWithPin(false);
     }
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            case R.id.change_pin:
+                mPinManager.signInWithPin(true);
                 break;
         }
         return super.onOptionsItemSelected(item);

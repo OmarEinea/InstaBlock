@@ -30,7 +30,7 @@ public class VHModels {
 
     public static class ExpandableViewHolder extends AppViewHolder {
         public ExpandableLayout mExpandable;
-        public LinearLayout mUnblock, mTimer, mInfo;
+        public LinearLayout mUnblock, mInfo;
         public TextView mAttempts;
 
         public ExpandableViewHolder(View itemView) {
@@ -38,7 +38,6 @@ public class VHModels {
             mExpandable = itemView.findViewById(R.id.expandable);
             mUnblock = itemView.findViewById(R.id.unblock_btn);
             mAttempts = itemView.findViewById(R.id.attempts);
-            mTimer = itemView.findViewById(R.id.timer_btn);
             mInfo = itemView.findViewById(R.id.info_btn);
         }
     }

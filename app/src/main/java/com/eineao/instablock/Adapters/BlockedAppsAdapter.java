@@ -1,6 +1,8 @@
 package com.eineao.instablock.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.eineao.instablock.R;
 
 public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
     public ExpandableViewHolder mPreviousHolder;
+    private final String URL = "https://play.google.com/store/apps/details?id=";
 
     public BlockedAppsAdapter(Context context) {
         super(context);
@@ -37,6 +40,14 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
             holder.mAttempts.setVisibility(View.VISIBLE);
             holder.mAttempts.setText(app.getAttemptsString());
         }
+        holder.mInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openURL = new Intent(Intent.ACTION_VIEW);
+                openURL.setData(Uri.parse(URL + app.getPackageName()));
+                mContext.startActivity(openURL);
+            }
+        });
         holder.mUnblock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

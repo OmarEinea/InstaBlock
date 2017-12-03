@@ -38,7 +38,7 @@ public class PinManager {
         mStorage.edit().clear().apply();
     }
 
-    public void registerNewPin() {
+    public void registerNewPin(final boolean change) {
         View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
         final EditText newPin = dialog.findViewById(R.id.pin);
         final EditText confirmPin = dialog.findViewById(R.id.confirm_pin);
@@ -55,7 +55,10 @@ public class PinManager {
                 else if(!confirmPin.getText().toString().equals(pin))
                     Toast.makeText(mActivity, "The PINs do not match", Toast.LENGTH_SHORT).show();
                 else {
-                    Toast.makeText(mActivity, "Welcome to InstaBlock", Toast.LENGTH_SHORT).show();
+                    if(change)
+                        Toast.makeText(mActivity, "Your PIN has been changed", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(mActivity, "Welcome to InstaBlock", Toast.LENGTH_SHORT).show();
                     setPin(pin);
                     alertDialog.dismiss();
                 }
@@ -85,14 +88,11 @@ public class PinManager {
                 if(getPin().equals(pin.getText().toString())) {
                     alertDialog.dismiss();
 
-                    if(change){
+                    if(change) {
                         clearPin();
-                        registerNewPin();
-                    }
-                    else{
+                        registerNewPin(true);
+                    } else
                         Toast.makeText(mActivity, "Welcome back!", Toast.LENGTH_SHORT).show();
-                    }
-
                 } else {
                     Toast.makeText(mActivity, "Wrong PIN", Toast.LENGTH_SHORT).show();
                     pin.setText("");
@@ -130,9 +130,5 @@ public class PinManager {
                         .showSoftInput(editText, 0);
             }
         }, 300);
-    }
-
-    public void changePin(){
-
     }
 }
