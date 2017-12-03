@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mTabs = findViewById(R.id.tabs);
         mFabMenu = findViewById(R.id.fab_menu);
         mFabShade = findViewById(R.id.fab_shade);
+
         mPlayStoreButton = findViewById(R.id.play_store_btn);
         mInstalledAppsButton = findViewById(R.id.installed_apps_btn);
         mCustomFiltersButton = findViewById(R.id.custom_filters_btn);
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         if(mPinManager.getPin().isEmpty())
             mPinManager.registerNewPin();
         else
-            mPinManager.signInWithPin();
+            mPinManager.signInWithPin(false);
     }
 
     private View.OnClickListener getOpenActivityOnClickListener(final Class targetActivity) {
@@ -146,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_settings:
-                return true;
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
