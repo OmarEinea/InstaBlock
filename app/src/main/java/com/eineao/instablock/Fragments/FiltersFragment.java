@@ -20,9 +20,9 @@ public class FiltersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_blocked_items, container, false);
+        View view = inflater.inflate(R.layout.view_items_list, container, false);
         mAdapter = new FiltersAdapter(view.getContext());
-        mRecyclerView = view.findViewById(R.id.blocked_apps);
+        mRecyclerView = view.findViewById(R.id.items_list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(

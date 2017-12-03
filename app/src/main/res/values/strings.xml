@@ -21,4 +21,8 @@
     <string name="new_pin">New PIN</string>
     <string name="pin_hint">1234</string>
     <string name="confirm_pin">Confirm PIN</string>
+    <string name="from_play_store">From Play Store</string>
+    <string name="from_installed_apps">From Installed Apps</string>
+    <string name="predefined_filter">Predefined Filter</string>
+    <string name="custom_filter">Custom Filter</string>
 </resources>

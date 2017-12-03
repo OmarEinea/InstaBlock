@@ -15,11 +15,6 @@ public class FilterModel {
     private ArrayList<String> mKeywords;
     private int mAttempts = 0;
 
-    public FilterModel(String filterName, ArrayList<String> keywords) {
-        mName = filterName;
-        mKeywords = keywords;
-    }
-
     public FilterModel(String filterName, String keywords) {
         if(filterName.length() > 0 && keywords.length() > 0) {
             mName = filterName;

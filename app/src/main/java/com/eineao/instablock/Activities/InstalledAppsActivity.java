@@ -32,7 +32,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
 
         mSearchView = findViewById(R.id.search_view);
         mAdapter = new SearchAppsAdapter(this, true);
-        mRecyclerView = findViewById(R.id.search_results);
+        mRecyclerView = findViewById(R.id.items_list);
         mPackageManager = getApplicationContext().getPackageManager();
         mInstalledApps = mPackageManager.getInstalledApplications(0);
 
@@ -62,7 +62,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
     private class InstalledAppsFetcher extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected Boolean doInBackground(String... strings) {
-            mAdapter.clearApps();
+            mAdapter.clearItems();
             String appName;
             for(ApplicationInfo app : mInstalledApps)
                 if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {

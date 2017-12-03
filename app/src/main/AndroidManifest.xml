@@ -26,6 +26,8 @@
 
         <activity android:name=".Activities.InstalledAppsActivity"/>
 
+        <activity android:name=".Activities.PredefinedFiltersActivity"/>
+
         <receiver android:name=".InstallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>

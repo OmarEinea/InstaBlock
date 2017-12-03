@@ -21,12 +21,13 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends AppCompatActivity {
-    private View mFabShade;
-    private FloatingActionsMenu mFabMenu;
-    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton, mFiltersButton;
     private ViewPager mViewPager;
     private TabLayout mTabs;
     private PinManager mPinManager;
+    private View mFabShade;
+    private FloatingActionsMenu mFabMenu;
+    private FloatingActionButton mPlayStoreButton, mInstalledAppsButton,
+                                 mPredefinedFiltersButton, mCustomFiltersButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         mTabs = findViewById(R.id.tabs);
         mFabMenu = findViewById(R.id.fab_menu);
         mFabShade = findViewById(R.id.fab_shade);
-        mPlayStoreButton = findViewById(R.id.play_store_button);
-        mInstalledAppsButton = findViewById(R.id.installed_apps_button);
-        mFiltersButton = findViewById(R.id.filters_button);
+        mPlayStoreButton = findViewById(R.id.play_store_btn);
+        mInstalledAppsButton = findViewById(R.id.installed_apps_btn);
+        mCustomFiltersButton = findViewById(R.id.custom_filters_btn);
+        mPredefinedFiltersButton = findViewById(R.id.predefined_filters_btn);
         mPinManager = new PinManager(this);
 
         // Set the adapter that will return a fragment for each of the two tabs
@@ -58,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 collapseAllExpendedViews();
                 switch(tabPosition) {
                     case 0:
-                        mFiltersButton.setVisibility(View.GONE);
+                        mCustomFiltersButton.setVisibility(View.GONE);
+                        mPredefinedFiltersButton.setVisibility(View.GONE);
                         mPlayStoreButton.setVisibility(View.VISIBLE);
                         mInstalledAppsButton.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        mFiltersButton.setVisibility(View.VISIBLE);
+                        mCustomFiltersButton.setVisibility(View.VISIBLE);
+                        mPredefinedFiltersButton.setVisibility(View.VISIBLE);
                         mPlayStoreButton.setVisibility(View.GONE);
                         mInstalledAppsButton.setVisibility(View.GONE);
                         break;
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
             public void onMenuCollapsed() {}
         });
-        mFabMenu.getChildAt(3).setOnClickListener(new View.OnClickListener() {
+        mFabMenu.getChildAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mFabMenu.toggle();
@@ -98,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mPlayStoreButton.setOnClickListener(getSearchAppsOnClickListener(PlayStoreActivity.class));
-        mInstalledAppsButton.setOnClickListener(getSearchAppsOnClickListener(InstalledAppsActivity.class));
-        mFiltersButton.setOnClickListener(new View.OnClickListener() {
+        mPlayStoreButton.setOnClickListener(getOpenActivityOnClickListener(PlayStoreActivity.class));
+        mInstalledAppsButton.setOnClickListener(getOpenActivityOnClickListener(InstalledAppsActivity.class));
+        mPredefinedFiltersButton.setOnClickListener(getOpenActivityOnClickListener(PredefinedFiltersActivity.class));
+        mCustomFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FiltersFragment.mAdapter.modifyFilter(null);
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             mPinManager.signInWithPin();
     }
 
-    private View.OnClickListener getSearchAppsOnClickListener(final Class targetActivity) {
+    private View.OnClickListener getOpenActivityOnClickListener(final Class targetActivity) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

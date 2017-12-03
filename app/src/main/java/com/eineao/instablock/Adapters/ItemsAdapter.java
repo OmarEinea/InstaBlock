@@ -29,7 +29,7 @@ public abstract class ItemsAdapter<VH extends RecyclerView.ViewHolder> extends R
         return mItems.size();
     }
 
-    public void clearApps() {
+    public void clearItems() {
         mItems.clear();
     }
 

@@ -1,8 +1,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -11,17 +11,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
-
-        <android.support.v7.widget.SearchView
-            android:paddingLeft="-16dp"
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:iconifiedByDefault="false"
-            app:queryHint="@string/search_hint"/>
-
-    </android.support.v7.widget.Toolbar>
+        app:title="@string/predefined_filter"
+        android:theme="?attr/actionBarTheme"/>
 
     <include layout="@layout/view_items_list"/>
 

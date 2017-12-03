@@ -67,7 +67,6 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
                                     app.getTitle() + " has been blocked!",
                                     Toast.LENGTH_SHORT
                             ).show();
-                            ((Activity) mContext).setResult(Activity.RESULT_OK);
                             ((Activity) mContext).finish();
                         }
                     }).setMessage(String.format(

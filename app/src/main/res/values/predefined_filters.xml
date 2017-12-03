@@ -1,0 +1,24 @@
+<resources>
+    <string name="social_media">Social Media</string>
+    <string name="adults_content">Adults Content</string>
+    <string name="proxies">Proxies</string>
+    <string name="chatting">Chatting</string>
+    <string name="root">Root</string>
+    <string name="gambling">Gambling</string>
+    <string name="violence">Violence</string>
+    <string name="dating">Dating</string>
+    <string name="music">Music</string>
+    <string name="gaming">Gaming</string>
+    <string name="video">Video</string>
+    <string name="social_media_keywords">facebook, twitter, instagram, tumbler</string>
+    <string name="adults_content_keywords">+18, adult, sex, nude, porn</string>
+    <string name="proxies_keywords">proxy, vpn, tor, hotspot</string>
+    <string name="chatting_keywords">chat, whatsapp, snapchat, telegram</string>
+    <string name="root_keywords">root, system, xposed, utility</string>
+    <string name="gambling_keywords">gambling, casino, cards, money</string>
+    <string name="violence_keywords">violent, kill, kombat, crime</string>
+    <string name="dating_keywords">dating, love, meet, tinder</string>
+    <string name="music_keywords">music, audio, spotify</string>
+    <string name="gaming_keywords">game, candy, saga, crush, clan</string>
+    <string name="video_keywords">youtube, vemio, dailymotion</string>
+</resources>

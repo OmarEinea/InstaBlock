@@ -30,7 +30,7 @@ public class PlayStoreActivity extends AppCompatActivity {
 
         mSearchView = findViewById(R.id.search_view);
         mAdapter = new SearchAppsAdapter(this, false);
-        mRecyclerView = findViewById(R.id.search_results);
+        mRecyclerView = findViewById(R.id.items_list);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -57,7 +57,7 @@ public class PlayStoreActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            mAdapter.clearApps();
+            mAdapter.clearItems();
             Elements tags;
 
             try {
