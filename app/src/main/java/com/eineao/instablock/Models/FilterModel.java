@@ -20,8 +20,10 @@ public class FilterModel {
     }
 
     public FilterModel(String filterName, String keywords) {
-        mName = filterName;
-        mKeywords = new ArrayList<>(Arrays.asList(keywords.split(",")));
+        if(filterName.length() > 0 && keywords.length() > 0) {
+            mName = filterName;
+            mKeywords = new ArrayList<>(Arrays.asList(keywords.split(" *, *")));
+        }
     }
 
     public FilterModel(String filterName, Cursor keywords) {
@@ -43,6 +45,11 @@ public class FilterModel {
 
     public ArrayList<String> getKeywords() {
         return mKeywords;
+    }
+
+    public String getKeywordsString() {
+        String keywordsString = mKeywords.toString();
+        return keywordsString.substring(1, keywordsString.length() - 1);
     }
 
     public void setKeywords(ArrayList<String> keywords) {

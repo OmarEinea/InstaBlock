@@ -15,13 +15,13 @@ import com.eineao.instablock.R;
 
 public class FiltersFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
-    private static FiltersAdapter mAdapter;
+    public static FiltersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.blocked_items_list, container, false);
+        View view = inflater.inflate(R.layout.list_blocked_items, container, false);
         mAdapter = new FiltersAdapter(view.getContext());
         mRecyclerView = view.findViewById(R.id.blocked_apps);
         mRecyclerView.setAdapter(mAdapter);
@@ -29,12 +29,12 @@ public class FiltersFragment extends Fragment {
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
-        fetchFilters();
+        mAdapter.loadAllFiltersFromDatabase();
         return view;
     }
 
-    public static void fetchFilters() {
-        mAdapter.loadAllFiltersFromDatabase();
-        mAdapter.notifyDataSetChanged();
+    public static void collapseExpendedViews() {
+        if(mAdapter.mPreviousHolder != null)
+            mAdapter.mPreviousHolder.mExpandable.collapse();
     }
 }

@@ -3,7 +3,6 @@ package com.eineao.instablock;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -14,31 +13,29 @@ public class PrefUtils {
 
     private SharedPreferences mSharedPreferences;
     private Activity mActivity;
-    private Context mContext;
 
-    public PrefUtils(Context mContext) {
-        this.mContext = mContext;
+    public PrefUtils(Activity mActivity) {
+        this.mActivity = mActivity;
     }
 
     public void setPin(String pin) {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mSharedPreferences = mActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString("Pin", pin);
         Log.i("SHAREDPREF", pin);
-        editor.apply();
+        editor.commit();
     }
 
     public String getPin(){
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String pin = mSharedPreferences.getString("Pin", "0000");
+        mSharedPreferences = mActivity.getPreferences(Context.MODE_PRIVATE);
+        String pin = mSharedPreferences.getString("Pin", "");
         Log.i("SHAREDPREF", pin);
         return pin;
     }
 
     public void clearPin(){
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mSharedPreferences = mActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.remove("Pin");
-        editor.apply();
+        editor.clear();
     }
 }
