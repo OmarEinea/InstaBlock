@@ -39,7 +39,7 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
     @Override
     public AppViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new AppViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_app, parent, false));
+                .inflate(R.layout.view_item, parent, false));
     }
 
     @Override
@@ -59,8 +59,8 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
                 new AlertDialog.Builder(mContext)
                     .setTitle("Block App")
                     .setIcon(R.drawable.ic_warning)
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             new AppBlocker().execute(app);
                             Toast.makeText(mContext,
@@ -102,7 +102,7 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            BlockedAppsFragment.fetchBlockedApps();
+            BlockedAppsFragment.mAdapter.loadAllBlockedAppsFromDatabase();
             super.onPostExecute(aBoolean);
         }
     }

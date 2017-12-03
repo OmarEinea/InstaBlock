@@ -19,8 +19,7 @@ public class FiltersFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_blocked_items, container, false);
         mAdapter = new FiltersAdapter(view.getContext());
         mRecyclerView = view.findViewById(R.id.blocked_apps);
@@ -29,8 +28,13 @@ public class FiltersFragment extends Fragment {
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
-        mAdapter.loadAllFiltersFromDatabase();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        mAdapter.loadAllFiltersFromDatabase();
+        super.onResume();
     }
 
     public static void collapseExpendedViews() {
