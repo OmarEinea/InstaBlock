@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/view_app"/>
+    <include layout="@layout/view_item"/>
 
     <net.cachapa.expandablelayout.ExpandableLayout
         android:id="@+id/expandable"

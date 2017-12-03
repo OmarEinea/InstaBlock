@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eineao.instablock.Fragments.BlockedAppsFragment;
 import com.eineao.instablock.Models.AppModel;
 import com.eineao.instablock.Models.VHModels.ExpandableViewHolder;
 import com.eineao.instablock.R;
@@ -25,7 +24,7 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
     @Override
     public ExpandableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ExpandableViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_expandable_app, parent, false));
+                .inflate(R.layout.view_expandable_item, parent, false));
     }
 
     @Override
@@ -34,11 +33,15 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
 
         holder.mIcon.setImageBitmap(app.getIcon());
         holder.mTitle.setText(app.getTitle());
+        if(app.getAttempts() > 0) {
+            holder.mAttempts.setVisibility(View.VISIBLE);
+            holder.mAttempts.setText(app.getAttemptsString());
+        }
         holder.mUnblock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDB.deleteBlockedApp(app);
-                BlockedAppsFragment.fetchBlockedApps();
+                loadAllBlockedAppsFromDatabase();
                 holder.mExpandable.toggle();
                 mPreviousHolder = null;
             }
@@ -56,5 +59,6 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
 
     public void loadAllBlockedAppsFromDatabase() {
         mDB.loadAllBlockedApps(mItems);
+        notifyDataSetChanged();
     }
 }

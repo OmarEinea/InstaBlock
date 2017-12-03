@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.eineao.instablock.Models.AppModel;
 
@@ -23,16 +22,24 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;
     private final static String DATABASE_NAME = "blocked_apps",
-        PACKAGE_NAME = "package_name", TITLE = "title", ICON = "icon",
+        PACKAGE_NAME = "package_name", TITLE = "title", ICON = "icon", ATTEMPTS = "attempts",
         DROP_TABLE_IF_EXISTED = "drop table if exists " + DATABASE_NAME,
         QUERY_ALL_APPS = "select * from " + DATABASE_NAME,
         QUERY_AN_APP = String.format(
             "select %s,%s from %s where %s=?",
             PACKAGE_NAME, TITLE, DATABASE_NAME, PACKAGE_NAME
         ),
+        QUERY_APP_ATTEMPTS = String.format(
+                "select %s from %s where %s=?",
+                ATTEMPTS, DATABASE_NAME, PACKAGE_NAME
+        ),
+        INCREMENT_APP_ATTEMPTS = String.format(
+            "UPDATE %s SET %s=%s+1 WHERE %s='%%s'",
+            DATABASE_NAME, ATTEMPTS, ATTEMPTS, PACKAGE_NAME
+        ),
         DATABASE_CREATE_SCHEMA = String.format(
-            "create table %s (%s text primary key,%s text,%s text);",
-            DATABASE_NAME, PACKAGE_NAME, TITLE, ICON
+            "create table %s (%s text primary key,%s text,%s text,%s integer default 0);",
+            DATABASE_NAME, PACKAGE_NAME, TITLE, ICON, ATTEMPTS
         );
 
     public BlockedAppsDatabase(Context context) {
@@ -77,18 +84,11 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
         blockedApps.clear();
         if(cursor.moveToFirst())
-            do
-                blockedApps.add(new AppModel(
-                        cursor.getString(1), getIcon(cursor.getBlob(2)), cursor.getString(0)
-                ));
+            do blockedApps.add(new AppModel(cursor));
             while(cursor.moveToNext());
 
         cursor.close();
         db.close();
-    }
-
-    private Bitmap getIcon(byte[] bytes) {
-        return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
     }
 
     public AppModel getBlockedApp(String packageName) {
@@ -100,5 +100,18 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return app;
+    }
+
+    public void incrementAppAttempts(String packageName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(String.format(INCREMENT_APP_ATTEMPTS, packageName));
+        db.close();
+    }
+
+    public int getAppAttempts(AppModel app) {
+        SQLiteDatabase db = getWritableDatabase();
+        int attempts = db.rawQuery(QUERY_APP_ATTEMPTS, new String[]{app.getPackageName()}).getInt(0);
+        db.close();
+        return attempts;
     }
 }

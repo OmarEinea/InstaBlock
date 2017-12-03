@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class FilterModel {
     private String mName;
     private ArrayList<String> mKeywords;
+    private int mAttempts = 0;
 
     public FilterModel(String filterName, ArrayList<String> keywords) {
         mName = filterName;
@@ -30,8 +31,10 @@ public class FilterModel {
         mName = filterName;
         mKeywords = new ArrayList<>();
         if(keywords.moveToFirst())
-            do mKeywords.add(keywords.getString(0));
-            while(keywords.moveToNext());
+            do {
+                mKeywords.add(keywords.getString(0));
+                mAttempts += keywords.getInt(1);
+            } while(keywords.moveToNext());
         keywords.close();
     }
 
@@ -56,11 +59,23 @@ public class FilterModel {
         mKeywords = keywords;
     }
 
+    public int getAttempts() {
+        return mAttempts;
+    }
+
+    public void setAttempts(int attempts) {
+        mAttempts = attempts;
+    }
+
+    public String getAttemptsString() {
+        return mAttempts + " attempt" + (mAttempts > 1 ? "s" : "");
+    }
+
     @Override
     public String toString() {
         return "FilterModel {" +
-            "mName='" + mName + "'" +
-            "mKeywords=" + mKeywords +
-        "}";
+                "mName='" + mName + "'" +
+                "mKeywords=" + mKeywords +
+                "}";
     }
 }

@@ -33,7 +33,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
     @Override
     public ExpandableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ExpandableViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_expandable_app, parent, false));
+                .inflate(R.layout.view_expandable_item, parent, false));
     }
 
     @Override
@@ -42,6 +42,10 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
 
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_filter_single));
         holder.mTitle.setText(filter.getName());
+        if(filter.getAttempts() > 0) {
+            holder.mAttempts.setVisibility(View.VISIBLE);
+            holder.mAttempts.setText(filter.getAttemptsString());
+        }
         holder.mUnblock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +72,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
                 mPreviousHolder = holder;
             }
         });
+        ((TextView) holder.itemView.findViewById(R.id.item_description)).setText(filter.getKeywordsString());
     }
 
     public void loadAllFiltersFromDatabase() {

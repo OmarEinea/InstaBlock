@@ -21,17 +21,21 @@ public class FiltersDatabase extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;
     private final static String DATABASE_NAME = "blocked_keywords",
-        FILTER_ID = "filter_id", FILTER_NAME = "filter_name", KEYWORD = "keyword",
+        FILTER_ID = "filter_id", FILTER_NAME = "filter_name", KEYWORD = "keyword", ATTEMPTS = "attempts",
         DROP_TABLE_IF_EXISTED = "drop table if exists " + DATABASE_NAME,
         QUERY_ALL_FILTERS = "select distinct " + FILTER_NAME + " from " + DATABASE_NAME,
         QUERY_ALL_KEYWORDS = "select distinct " + KEYWORD + " from " + DATABASE_NAME,
-        QUERY_FILTER_KEYWORDS = String.format(
-                "select %s from %s where %s=?",
-                KEYWORD, DATABASE_NAME, FILTER_NAME
+        QUERY_FILTER = String.format(
+                "select %s,%s from %s where %s=?",
+                KEYWORD, ATTEMPTS, DATABASE_NAME, FILTER_NAME
+        ),
+        INCREMENT_APP_ATTEMPTS = String.format(
+                "UPDATE %s SET %s=%s+1 WHERE %s='%%s'",
+                DATABASE_NAME, ATTEMPTS, ATTEMPTS, KEYWORD
         ),
         DATABASE_CREATE_SCHEMA = String.format(
-                "create table %s (%s integer primary key autoincrement,%s text,%s text);",
-                DATABASE_NAME, FILTER_ID, FILTER_NAME, KEYWORD
+                "create table %s (%s integer primary key autoincrement,%s text,%s text,%s integer default 0);",
+                DATABASE_NAME, FILTER_ID, FILTER_NAME, KEYWORD, ATTEMPTS
         );
 
     public FiltersDatabase(Context context) {
@@ -87,15 +91,15 @@ public class FiltersDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void loadAllFilters(List<FilterModel> blockedFilters) {
+    public void loadAllFilters(List<FilterModel> filters) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(QUERY_ALL_FILTERS, null);
 
-        blockedFilters.clear();
+        filters.clear();
         if(cursor.moveToFirst())
             do
-                blockedFilters.add(new FilterModel(cursor.getString(0), db.rawQuery(
-                    QUERY_FILTER_KEYWORDS, new String[]{cursor.getString(0)}
+                filters.add(new FilterModel(cursor.getString(0), db.rawQuery(
+                    QUERY_FILTER, new String[]{cursor.getString(0)}
                 )));
             while(cursor.moveToNext());
 
@@ -115,5 +119,11 @@ public class FiltersDatabase extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return blockedKeywords;
+    }
+
+    public void incrementFilterAttempts(String keyword) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(String.format(INCREMENT_APP_ATTEMPTS, keyword));
+        db.close();
     }
 }

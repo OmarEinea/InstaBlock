@@ -1,6 +1,8 @@
 package com.eineao.instablock.Models;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.jsoup.nodes.Element;
 
@@ -17,11 +19,19 @@ public class AppModel {
     private final String ICON_URL = "https://lh3.googleusercontent.com/%s=w%d";
     private String mTitle, mPackageName, mIconURL = null;
     private Bitmap mIcon = null;
+    private int mAttempts = 0;
 
     public AppModel(String title, Bitmap icon, String packageName) {
         mTitle = title;
         mIcon = icon;
         mPackageName = packageName;
+    }
+
+    public AppModel(Cursor cursor) {
+        mTitle = cursor.getString(1);
+        mIcon = getIcon(cursor.getBlob(2));
+        mPackageName = cursor.getString(0);
+        mAttempts = cursor.getInt(3);
     }
 
     public AppModel(Element image, Element link) {
@@ -30,6 +40,10 @@ public class AppModel {
         mIconURL = String.format(Locale.US, ICON_URL, iconSubURL, 96);
         mTitle = image.attr("alt");
         mPackageName = appURL.substring(appURL.indexOf("=") + 1);
+    }
+
+    private Bitmap getIcon(byte[] bytes) {
+        return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
     }
 
     public String getTitle() {
@@ -62,6 +76,14 @@ public class AppModel {
 
     public void setPackageName(String packageName) {
         mPackageName = packageName;
+    }
+
+    public String getAttemptsString() {
+        return mAttempts + " attempt" + (mAttempts > 1 ? "s" : "");
+    }
+
+    public int getAttempts() {
+        return mAttempts;
     }
 
     @Override
