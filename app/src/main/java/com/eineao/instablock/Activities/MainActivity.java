@@ -1,8 +1,6 @@
 package com.eineao.instablock.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -36,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private String pin;
     private PrefUtils pref;
-    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mSharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
@@ -85,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
         mPlayStoreButton.setOnClickListener(getSearchAppsOnClickListener(PlayStoreActivity.class));
         mInstalledAppsButton.setOnClickListener(getSearchAppsOnClickListener(InstalledAppsActivity.class));
 
-        pref = new PrefUtils(this);
-        pref.clearPin();
+        pref = new PrefUtils(getApplicationContext());
         pin = pref.getPin();
-        if(pin.equals("")){
+        if(pin.equals("0000")){
             newPin();
         }
         else{
@@ -215,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
