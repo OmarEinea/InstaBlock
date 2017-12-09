@@ -64,7 +64,7 @@ public class SearchAppsAdapter extends ItemsAdapter<AppViewHolder> {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             new AppBlocker().execute(app);
                             Toast.makeText(mContext,
-                                    app.getTitle() + " has been blocked!",
+                                    app.getTitle() + " is blocked!",
                                     Toast.LENGTH_SHORT
                             ).show();
                             ((Activity) mContext).finish();

@@ -34,7 +34,7 @@
                 android:focusable="true">
 
                 <ImageView
-                    android:src="@drawable/ic_unblock"
+                    app:srcCompat="@drawable/ic_unblock"
                     android:tint="@color/greyDarken2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -62,7 +62,7 @@
                 android:focusable="true">
 
                 <ImageView
-                    android:src="@drawable/ic_info"
+                    app:srcCompat="@drawable/ic_info"
                     android:tint="@color/greyDarken2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"

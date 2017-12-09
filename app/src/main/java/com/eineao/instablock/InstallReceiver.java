@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
@@ -30,7 +29,7 @@ public class InstallReceiver extends BroadcastReceiver {
             FiltersDatabase filtersDB = new FiltersDatabase(context);
             // Check if installed app is among the blocked apps
             AppModel app = appsDB.getBlockedApp(packageName);
-            if(app == null) {
+            if(app == null)
                 try {
                     PackageManager pm = context.getPackageManager();
                     String appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString().toLowerCase();
@@ -41,18 +40,17 @@ public class InstallReceiver extends BroadcastReceiver {
                             break;
                         }
                 } catch (Exception ignored) {}
-            }
             // If it is blocked
             if(app != null) {
                 // Uninstall the blocked app
                 uninstallPackage(packageName);
                 // Show a toast to indicate that the blocked app was uninstalled
                 Toast.makeText(context, "InstaBlock uninstalled " + app.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Recorded a blocked installation" + app.getTitle(), Toast.LENGTH_SHORT).show();
                 if(blockedKeyword == null)
                     appsDB.incrementAppAttempts(packageName);
                 else
                     filtersDB.incrementFilterAttempts(blockedKeyword);
-                Log.i("InstaBlock", app.getTitle() + "was uninstalled");
             }
         }
     }
@@ -63,9 +61,6 @@ public class InstallReceiver extends BroadcastReceiver {
         if(RootTools.isAccessGiven())
             try { // Try uninstalling the package using PackageManager's "uninstall" command
                 RootTools.getShell(true).add(new Command(0, "pm uninstall " + packageName));
-            } catch (Exception e) { // If command execution fails, record an error of failure
-                e.printStackTrace();
-                Log.e("uninstallPackage()", "Failed to execute uninstall package command");
-            }
+            } catch (Exception ignored) {}
     }
 }

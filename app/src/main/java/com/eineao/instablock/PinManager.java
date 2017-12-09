@@ -56,9 +56,9 @@ public class PinManager {
                     Toast.makeText(mActivity, "The PINs do not match", Toast.LENGTH_SHORT).show();
                 else {
                     if(change)
-                        Toast.makeText(mActivity, "Your PIN has been changed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, "Your PIN is changed", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(mActivity, "Welcome to InstaBlock", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, "Welcome to InstaBlock!", Toast.LENGTH_SHORT).show();
                     setPin(pin);
                     alertDialog.dismiss();
                 }

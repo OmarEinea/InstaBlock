@@ -63,6 +63,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
                     loadAllFiltersFromDatabase();
                     holder.mExpandable.toggle();
                     mPreviousHolder = null;
+                    Toast.makeText(mContext, filter.getName() + " filter is removed", Toast.LENGTH_SHORT).show();
                 }
             });
             ((ImageView) holder.mInfo.getChildAt(0)).setImageResource(R.drawable.ic_edit);
@@ -90,7 +91,7 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
                 public void onClick(View view) {
                     mDB.addFilter(filter);
                     Toast.makeText(mContext,
-                            filter.getName() + "filter has been blocked!",
+                            filter.getName() + " filter is added",
                             Toast.LENGTH_SHORT
                     ).show();
                     ((Activity) mContext).finish();
@@ -117,13 +118,16 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
         } else action = mContext.getResources().getString(R.string.add);
         new AlertDialog.Builder(mContext)
             .setTitle(action + " a Filter")
-            .setIcon(R.drawable.ic_filter_predefined_dark)
+            .setIcon(R.drawable.ic_filter_custom_dark)
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(action, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if(filter != null)
+                    if(filter != null) {
                         mDB.deleteFilter(filter);
+                        Toast.makeText(mContext, filter.getName() + " filter is modified", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(mContext, filterName.getText().toString() + " filter is added", Toast.LENGTH_SHORT).show();
                     mDB.addFilter(
                         new FilterModel(
                             filterName.getText().toString(),
