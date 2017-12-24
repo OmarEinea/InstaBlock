@@ -12,6 +12,8 @@ import com.eineao.instablock.Models.AppModel;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 
+import org.jsoup.Jsoup;
+
 /**
  * Created by Omar on 9/27/2017.
  *
@@ -19,20 +21,31 @@ import com.stericson.RootTools.RootTools;
  */
 
 public class InstallReceiver extends BroadcastReceiver {
+    private final String URL = "https://play.google.com/store/apps/details?hl=en&id=";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            String blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
+            String appName, blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
             BlockedAppsDatabase appsDB = new BlockedAppsDatabase(context);
             FiltersDatabase filtersDB = new FiltersDatabase(context);
             // Check if installed app is among the blocked apps
             AppModel app = appsDB.getBlockedApp(packageName);
+            // If not
             if(app == null)
                 try {
-                    PackageManager pm = context.getPackageManager();
-                    String appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString().toLowerCase();
+                    // Get app name
+                    try {
+                        // From play store
+                        appName = Jsoup.connect(URL + packageName).get().select(".id-app-title").first().text();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        // Otherwise, from installed app
+                        PackageManager pm = context.getPackageManager();
+                        appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString().toLowerCase();
+                    }
+                    // Check if installed app name contains any of the filtered keywords
                     for(String keyword : filtersDB.getAllBlockedKeywords())
                         if(appName.contains(keyword.toLowerCase())) {
                             app = new AppModel(appName, null, packageName);
