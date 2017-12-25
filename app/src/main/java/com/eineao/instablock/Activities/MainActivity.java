@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.eineao.instablock.Fragments.BlockedAppsFragment;
 import com.eineao.instablock.Fragments.FiltersFragment;
-import com.eineao.instablock.PinManager;
+import com.eineao.instablock.PasswordManager;
 import com.eineao.instablock.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -23,7 +23,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabs;
-    private PinManager mPinManager;
+    private PasswordManager mPasswordManager;
     private View mFabShade;
     private FloatingActionsMenu mFabMenu;
     private FloatingActionButton mPlayStoreButton, mInstalledAppsButton,
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mInstalledAppsButton = findViewById(R.id.installed_apps_btn);
         mCustomFiltersButton = findViewById(R.id.custom_filters_btn);
         mPredefinedFiltersButton = findViewById(R.id.predefined_filters_btn);
-        mPinManager = new PinManager(this);
+        mPasswordManager = new PasswordManager(this);
 
         // Set the adapter that will return a fragment for each of the two tabs
         mViewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(mPinManager.getPin().isEmpty())
-            mPinManager.registerNewPin(false);
+        if(mPasswordManager.getPassword().isEmpty())
+            mPasswordManager.registerNewPassword(false);
         else
-            mPinManager.signInWithPin(false);
+            mPasswordManager.signInWithPassword(false);
     }
 
     private View.OnClickListener getOpenActivityOnClickListener(final Class targetActivity) {
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.change_pin:
-                mPinManager.signInWithPin(true);
+            case R.id.change_password:
+                mPasswordManager.signInWithPassword(true);
                 break;
         }
         return super.onOptionsItemSelected(item);

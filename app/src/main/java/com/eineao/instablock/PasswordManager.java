@@ -16,55 +16,55 @@ import android.widget.Toast;
  * Created by abdulahiosoble on 12/2/17.
  */
 
-public class PinManager {
-    private final String PIN = "pin";
+public class PasswordManager {
+    private final String PASSWORD = "password";
     private SharedPreferences mStorage;
     private Activity mActivity;
 
-    public PinManager(Activity activity) {
+    public PasswordManager(Activity activity) {
         mActivity = activity;
         mStorage = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
-    public void setPin(String pin) {
-        mStorage.edit().putString(PIN, pin).apply();
+    public void setPassword(String password) {
+        mStorage.edit().putString(PASSWORD, password).apply();
     }
 
-    public String getPin() {
-        return mStorage.getString(PIN, "");
+    public String getPassword() {
+        return mStorage.getString(PASSWORD, "");
     }
 
-    public void clearPin() {
+    public void clearPassword() {
         mStorage.edit().clear().apply();
     }
 
-    public void registerNewPin(final boolean change) {
-        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
-        final EditText newPin = dialog.findViewById(R.id.pin);
-        final EditText confirmPin = dialog.findViewById(R.id.confirm_pin);
+    public void registerNewPassword(final boolean change) {
+        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_password, null);
+        final EditText newPassword = dialog.findViewById(R.id.password);
+        final EditText confirmPassword = dialog.findViewById(R.id.confirm_password);
 
-        final AlertDialog alertDialog = buildDialog(dialog, R.string.create_pin);
+        final AlertDialog alertDialog = buildDialog(dialog, R.string.create_password);
 
-        dialog.findViewById(R.id.enter_pin_btn).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.enter_password_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pin = newPin.getText().toString();
+                String password = newPassword.getText().toString();
 
-                if(pin.isEmpty())
-                    Toast.makeText(mActivity, "The PIN cannot be empty", Toast.LENGTH_SHORT).show();
-                else if(!confirmPin.getText().toString().equals(pin))
-                    Toast.makeText(mActivity, "The PINs do not match", Toast.LENGTH_SHORT).show();
+                if(password.isEmpty())
+                    Toast.makeText(mActivity, "The Password cannot be empty", Toast.LENGTH_SHORT).show();
+                else if(!confirmPassword.getText().toString().equals(password))
+                    Toast.makeText(mActivity, "The Passwords do not match", Toast.LENGTH_SHORT).show();
                 else {
                     if(change)
-                        Toast.makeText(mActivity, "Your PIN is changed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, "Your Password is changed", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(mActivity, "Welcome to InstaBlock!", Toast.LENGTH_SHORT).show();
-                    setPin(pin);
+                    setPassword(password);
                     alertDialog.dismiss();
                 }
             }
         });
-        dialog.findViewById(R.id.cancel_pin_btn).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.cancel_password_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mActivity.finish();
@@ -72,34 +72,34 @@ public class PinManager {
         });
 
         alertDialog.show();
-        showSoftKeyboard(newPin);
+        showSoftKeyboard(newPassword);
     }
 
-    public void signInWithPin(final boolean change) {
-        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_pin, null);
+    public void signInWithPassword(final boolean change) {
+        View dialog = LayoutInflater.from(mActivity).inflate(R.layout.dialog_manage_password, null);
         dialog.findViewById(R.id.hide_on_sign_in).setVisibility(View.GONE);
-        final EditText pin = dialog.findViewById(R.id.pin);
+        final EditText password = dialog.findViewById(R.id.password);
 
-        final AlertDialog alertDialog = buildDialog(dialog, R.string.enter_pin);
+        final AlertDialog alertDialog = buildDialog(dialog, R.string.enter_password);
 
-        dialog.findViewById(R.id.enter_pin_btn).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.enter_password_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getPin().equals(pin.getText().toString())) {
+                if(getPassword().equals(password.getText().toString())) {
                     alertDialog.dismiss();
 
                     if(change) {
-                        clearPin();
-                        registerNewPin(true);
+                        clearPassword();
+                        registerNewPassword(true);
                     } else
                         Toast.makeText(mActivity, "Welcome back!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mActivity, "Wrong PIN", Toast.LENGTH_SHORT).show();
-                    pin.setText("");
+                    Toast.makeText(mActivity, "Wrong Password", Toast.LENGTH_SHORT).show();
+                    password.setText("");
                 }
             }
         });
-        dialog.findViewById(R.id.cancel_pin_btn).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.cancel_password_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mActivity.finish();
@@ -107,7 +107,7 @@ public class PinManager {
         });
 
         alertDialog.show();
-        showSoftKeyboard(pin);
+        showSoftKeyboard(password);
     }
 
     private AlertDialog buildDialog(View dialog, int title) {

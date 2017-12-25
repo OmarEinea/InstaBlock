@@ -3,8 +3,8 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.eineao.instablock.Activities.MainActivity">
     <item
-        android:id="@+id/change_pin"
+        android:id="@+id/change_password"
         android:orderInCategory="100"
-        android:title="@string/change_pin"
+        android:title="@string/change_password"
         app:showAsAction="never"/>
 </menu>
