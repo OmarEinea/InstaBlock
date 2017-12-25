@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
@@ -21,13 +22,11 @@ import org.jsoup.Jsoup;
  */
 
 public class InstallReceiver extends BroadcastReceiver {
-    private final String URL = "https://play.google.com/store/apps/details?hl=en&id=";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
-            String appName, blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
+            String blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
             BlockedAppsDatabase appsDB = new BlockedAppsDatabase(context);
             FiltersDatabase filtersDB = new FiltersDatabase(context);
             // Check if installed app is among the blocked apps
@@ -35,19 +34,18 @@ public class InstallReceiver extends BroadcastReceiver {
             // If not
             if(app == null)
                 try {
-                    // Get app name
-                    try {
-                        // From play store
-                        appName = Jsoup.connect(URL + packageName).get().select(".id-app-title").first().text();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        // Otherwise, from installed app
+                    // Get app name from play store
+                    String appName = new PlayStoreFetcher().execute(packageName).get();
+                    // If app can't be found on play store
+                    if(appName == null) {
+                        // Get its name from the installed package
                         PackageManager pm = context.getPackageManager();
-                        appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString().toLowerCase();
+                        appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString();
                     }
+                    String appNameLowerCase = appName.toLowerCase();
                     // Check if installed app name contains any of the filtered keywords
                     for(String keyword : filtersDB.getAllBlockedKeywords())
-                        if(appName.contains(keyword.toLowerCase())) {
+                        if(appNameLowerCase.contains(keyword.toLowerCase())) {
                             app = new AppModel(appName, null, packageName);
                             blockedKeyword = keyword;
                             break;
@@ -64,6 +62,19 @@ public class InstallReceiver extends BroadcastReceiver {
                     appsDB.incrementAppAttempts(packageName);
                 else
                     filtersDB.incrementFilterAttempts(blockedKeyword);
+            }
+        }
+    }
+
+    private static class PlayStoreFetcher extends AsyncTask<String, Integer, String> {
+        private final String URL = "https://play.google.com/store/apps/details?hl=en&id=";
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                return Jsoup.connect(URL + strings[0]).get().select(".id-app-title").first().text();
+            } catch (Exception e) {
+                return null;
             }
         }
     }
