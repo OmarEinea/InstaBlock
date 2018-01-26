@@ -1,9 +1,5 @@
-package com.eineao.instablock.Activities;
+package com.eineao.instablock.activities;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,19 +7,21 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
-import com.eineao.instablock.Adapters.SearchAppsAdapter;
-import com.eineao.instablock.Models.AppModel;
+import com.eineao.instablock.adapters.SearchAppsAdapter;
+import com.eineao.instablock.models.AppModel;
 import com.eineao.instablock.R;
 
-import java.util.List;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-public class InstalledAppsActivity extends AppCompatActivity {
+import java.io.IOException;
+
+public class PlayStoreActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
     private RecyclerView mRecyclerView;
     private SearchAppsAdapter mAdapter;
-    private PackageManager mPackageManager;
-    private List<ApplicationInfo> mInstalledApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,52 +29,50 @@ public class InstalledAppsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_apps);
 
         mSearchView = findViewById(R.id.search_view);
-        mAdapter = new SearchAppsAdapter(this, true);
+        mAdapter = new SearchAppsAdapter(this, false);
         mRecyclerView = findViewById(R.id.items_list);
-        mPackageManager = getApplicationContext().getPackageManager();
-        mInstalledApps = mPackageManager.getInstalledApplications(0);
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                new PlayStoreFetcher().execute(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                new InstalledAppsFetcher().execute(newText);
                 return false;
             }
         });
 
-        mRecyclerView.requestFocus();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(mRecyclerView.getContext(), 1)
         );
-
-        new InstalledAppsFetcher().execute("");
     }
 
-    private class InstalledAppsFetcher extends AsyncTask<String, Integer, Boolean> {
+    private class PlayStoreFetcher extends AsyncTask<String, Integer, Boolean> {
+        private final String URL = "https://play.google.com/store/search?hl=en&c=apps&q=";
+
         @Override
         protected Boolean doInBackground(String... strings) {
             mAdapter.clearItems();
-            String appName;
-            for(ApplicationInfo app : mInstalledApps)
-                if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                    appName = app.loadLabel(mPackageManager).toString();
-                    if (appName.toLowerCase().contains(strings[0]))
-                        mAdapter.addApp(new AppModel(
-                                appName, getIcon(app), app.packageName
-                        ));
-                }
-            return true;
-        }
+            Elements tags;
 
-        private Bitmap getIcon(ApplicationInfo app) {
-            return ((BitmapDrawable) app.loadIcon(mPackageManager)).getBitmap();
+            try {
+                tags = Jsoup.connect(URL + strings[0]).get().select(".cover");
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            for(Element tag : tags)
+                mAdapter.addApp(new AppModel(
+                        tag.getElementsByTag("img").first(),
+                        tag.getElementsByTag("a").first()
+                ));
+            return true;
         }
 
         @Override

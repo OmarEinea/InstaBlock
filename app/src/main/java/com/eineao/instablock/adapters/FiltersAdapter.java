@@ -1,4 +1,4 @@
-package com.eineao.instablock.Adapters;
+package com.eineao.instablock.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eineao.instablock.DBHelpers.FiltersDatabase;
-import com.eineao.instablock.Models.FilterModel;
-import com.eineao.instablock.Models.VHModels.ExpandableViewHolder;
+import com.eineao.instablock.helpers.FiltersDatabase;
+import com.eineao.instablock.models.FilterModel;
+import com.eineao.instablock.models.VHModels.ExpandableViewHolder;
 import com.eineao.instablock.R;
 
 /**

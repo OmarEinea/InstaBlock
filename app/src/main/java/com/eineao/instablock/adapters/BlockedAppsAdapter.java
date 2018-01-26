@@ -1,4 +1,4 @@
-package com.eineao.instablock.Adapters;
+package com.eineao.instablock.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.eineao.instablock.Models.AppModel;
-import com.eineao.instablock.Models.VHModels.ExpandableViewHolder;
+import com.eineao.instablock.models.AppModel;
+import com.eineao.instablock.models.VHModels.ExpandableViewHolder;
 import com.eineao.instablock.R;
 
 /**

@@ -1,4 +1,4 @@
-package com.eineao.instablock.DBHelpers;
+package com.eineao.instablock.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.eineao.instablock.Models.FilterModel;
+import com.eineao.instablock.models.FilterModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;

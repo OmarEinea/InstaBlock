@@ -1,4 +1,4 @@
-package com.eineao.instablock.Activities;
+package com.eineao.instablock.activities;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 
-import com.eineao.instablock.Adapters.FiltersAdapter;
-import com.eineao.instablock.Models.FilterModel;
+import com.eineao.instablock.adapters.FiltersAdapter;
+import com.eineao.instablock.models.FilterModel;
 import com.eineao.instablock.R;
 
 /**

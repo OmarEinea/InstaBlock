@@ -1,4 +1,4 @@
-package com.eineao.instablock.Models;
+package com.eineao.instablock.models;
 
 import android.database.Cursor;
 import android.graphics.Bitmap;

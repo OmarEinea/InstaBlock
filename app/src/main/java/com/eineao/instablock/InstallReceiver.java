@@ -7,9 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
-import com.eineao.instablock.DBHelpers.FiltersDatabase;
-import com.eineao.instablock.Models.AppModel;
+import com.eineao.instablock.helpers.BlockedAppsDatabase;
+import com.eineao.instablock.helpers.FiltersDatabase;
+import com.eineao.instablock.models.AppModel;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 

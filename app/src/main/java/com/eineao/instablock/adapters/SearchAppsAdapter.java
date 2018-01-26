@@ -1,4 +1,4 @@
-package com.eineao.instablock.Adapters;
+package com.eineao.instablock.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.eineao.instablock.Fragments.BlockedAppsFragment;
+import com.eineao.instablock.fragments.BlockedAppsFragment;
 import com.eineao.instablock.InstallReceiver;
-import com.eineao.instablock.Models.AppModel;
-import com.eineao.instablock.Models.VHModels.AppViewHolder;
+import com.eineao.instablock.models.AppModel;
+import com.eineao.instablock.models.VHModels.AppViewHolder;
 import com.eineao.instablock.R;
 
 import java.io.IOException;

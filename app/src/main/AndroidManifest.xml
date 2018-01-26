@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.PlayStoreActivity"
+            android:name=".activities.PlayStoreActivity"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".Activities.InstalledAppsActivity" />
+        <activity android:name=".activities.InstalledAppsActivity" />
 
-        <activity android:name=".Activities.PredefinedFiltersActivity"/>
+        <activity android:name=".activities.PredefinedFiltersActivity"/>
 
         <receiver android:name=".InstallReceiver">
             <intent-filter>

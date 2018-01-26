@@ -1,4 +1,4 @@
-package com.eineao.instablock.Fragments;
+package com.eineao.instablock.fragments;
 
 
 import android.annotation.SuppressLint;
@@ -10,18 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eineao.instablock.Adapters.BlockedAppsAdapter;
+import com.eineao.instablock.adapters.FiltersAdapter;
 import com.eineao.instablock.R;
 
-public class BlockedAppsFragment extends Fragment {
+public class FiltersFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
-    public static BlockedAppsAdapter mAdapter;
+    public static FiltersAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_items_list, container, false);
-        mAdapter = new BlockedAppsAdapter(view.getContext());
+        mAdapter = new FiltersAdapter(view.getContext());
         mRecyclerView = view.findViewById(R.id.items_list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
@@ -33,7 +33,7 @@ public class BlockedAppsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        mAdapter.loadAllBlockedAppsFromDatabase();
+        mAdapter.loadAllFiltersFromDatabase();
         super.onResume();
     }
 

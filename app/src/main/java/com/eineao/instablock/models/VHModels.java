@@ -1,4 +1,4 @@
-package com.eineao.instablock.Models;
+package com.eineao.instablock.models;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

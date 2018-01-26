@@ -1,10 +1,10 @@
-package com.eineao.instablock.Adapters;
+package com.eineao.instablock.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.eineao.instablock.DBHelpers.BlockedAppsDatabase;
-import com.eineao.instablock.Models.AppModel;
+import com.eineao.instablock.helpers.BlockedAppsDatabase;
+import com.eineao.instablock.models.AppModel;
 
 import java.util.ArrayList;
 

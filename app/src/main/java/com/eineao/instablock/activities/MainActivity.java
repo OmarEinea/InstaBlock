@@ -1,4 +1,4 @@
-package com.eineao.instablock.Activities;
+package com.eineao.instablock.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.eineao.instablock.Fragments.BlockedAppsFragment;
-import com.eineao.instablock.Fragments.FiltersFragment;
+import com.eineao.instablock.fragments.BlockedAppsFragment;
+import com.eineao.instablock.fragments.FiltersFragment;
 import com.eineao.instablock.PasswordManager;
 import com.eineao.instablock.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
