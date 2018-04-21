@@ -5,19 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.AsyncTask;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.widget.Toast;
 
+import com.eineao.instablock.activities.BlockedDialog;
 import com.eineao.instablock.helpers.BlockedAppsDatabase;
 import com.eineao.instablock.helpers.FiltersDatabase;
 import com.eineao.instablock.models.AppModel;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 
-import org.jsoup.Jsoup;
-
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Omar on 9/27/2017.
@@ -40,34 +40,44 @@ public class InstallReceiver extends BroadcastReceiver {
                 /* Check if app name contains any of the blocked keywords */
                 ArrayList<String> keywords = filtersDB.getAllBlockedKeywords();
                 String appName = null;
-                try {
-                    // Get app name from the installed package
-                    PackageManager pm = context.getPackageManager();
+                PackageManager pm = context.getPackageManager();
+                try { // Get app name from the installed package
                     appName = pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString();
                     // Check if app name contains any blocked keyword
                     blockedKeyword = checkKeywords(keywords, appName);
                 } catch (NameNotFoundException ignore) {}
-                // If installed app name is clean
-                if(blockedKeyword == null)
-                    // Check the app's Play Store name
-                    try {
-                        // Get app name from Play Store
-                        appName = new PlayStoreFetcher().execute(packageName).get();
-                        // Check if app name contains any blocked keyword
-                        blockedKeyword = checkKeywords(keywords, appName);
-                    } catch (InterruptedException | ExecutionException ignore) {}
+//                // If installed app name is clean
+//                if(blockedKeyword == null)
+//                    // Check the app's Play Store name
+//                    try { // Get app name from Play Store
+//                        appName = new PlayStoreFetcher().execute(packageName).get();
+//                        // Check if app name contains any blocked keyword
+//                        blockedKeyword = checkKeywords(keywords, appName);
+//                    } catch (InterruptedException | ExecutionException ignore) {}
                 // If app name contains a blocked keyword
                 if(blockedKeyword != null)
-                    // Consider it as a blocked app
-                    blockedApp = new AppModel(appName, null, packageName);
+                    try { // Consider it as a blocked app
+                        blockedApp = new AppModel(
+                            appName,
+                            ((BitmapDrawable) pm.getApplicationIcon(packageName)).getBitmap(),
+                            packageName
+                        );
+                    } catch (NameNotFoundException ignored) {}
             }
             // If it's blocked
             if(blockedApp != null) {
                 // Uninstall the blocked app
                 uninstallPackage(packageName);
+                // Send app name and icon to blocked dialog through intent
+                ByteArrayOutputStream icon = new ByteArrayOutputStream();
+                blockedApp.getIcon().compress(Bitmap.CompressFormat.PNG, 100, icon);
+                Intent dialogIntent = new Intent(context, BlockedDialog.class);
+                dialogIntent.putExtra("appIcon", icon.toByteArray());
+                dialogIntent.putExtra("appName", blockedApp.getTitle());
+                context.startActivity(dialogIntent);
                 // Show a toast to indicate that the blocked app was uninstalled
                 Toast.makeText(context, "InstaBlock uninstalled " + blockedApp.getTitle(), Toast.LENGTH_LONG).show();
-                Toast.makeText(context, "Recorded a blocked installation" + blockedApp.getTitle(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Recorded a blocked installation" + blockedApp.getTitle(), Toast.LENGTH_SHORT).show();
                 if(blockedKeyword == null)
                     appsDB.incrementAppAttempts(packageName);
                 else
@@ -86,18 +96,18 @@ public class InstallReceiver extends BroadcastReceiver {
         return null;
     }
 
-    private static class PlayStoreFetcher extends AsyncTask<String, Integer, String> {
-        private final String URL = "https://play.google.com/store/apps/details?hl=en&id=";
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                return Jsoup.connect(URL + strings[0]).get().select(".id-app-title").first().text();
-            } catch (Exception e) {
-                return null;
-            }
-        }
-    }
+//    private static class PlayStoreFetcher extends AsyncTask<String, Integer, String> {
+//        private final String URL = "https://play.google.com/store/apps/details?hl=en&id=";
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            try {
+//                return Jsoup.connect(URL + strings[0]).get().select(".id-app-title").first().text();
+//            } catch (Exception e) {
+//                return null;
+//            }
+//        }
+//    }
 
     // A function that silently uninstalls a package using root access
     public static void uninstallPackage(String packageName) {

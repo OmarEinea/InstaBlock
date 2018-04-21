@@ -42,7 +42,7 @@ public class AppModel {
         mPackageName = appURL.substring(appURL.indexOf("=") + 1);
     }
 
-    private Bitmap getIcon(byte[] bytes) {
+    public static Bitmap getIcon(byte[] bytes) {
         return BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
     }
 

@@ -26,8 +26,8 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         DROP_TABLE_IF_EXISTED = "drop table if exists " + DATABASE_NAME,
         QUERY_ALL_APPS = "select * from " + DATABASE_NAME,
         QUERY_AN_APP = String.format(
-            "select %s,%s from %s where %s=?",
-            PACKAGE_NAME, TITLE, DATABASE_NAME, PACKAGE_NAME
+            "select * from %s where %s=?",
+            DATABASE_NAME, PACKAGE_NAME
         ),
         QUERY_APP_ATTEMPTS = String.format(
                 "select %s from %s where %s=?",
@@ -59,7 +59,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
 
     public void addBlockedApp(AppModel app) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        app.getIcon().compress(Bitmap.CompressFormat.PNG, 1, stream);
+        app.getIcon().compress(Bitmap.CompressFormat.PNG, 100, stream);
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -96,7 +96,7 @@ public class BlockedAppsDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(QUERY_AN_APP, new String[] {packageName});
         AppModel app = null;
         if(cursor.moveToFirst())
-            app = new AppModel(cursor.getString(1), null, cursor.getString(0));
+            app = new AppModel(cursor);
         cursor.close();
         db.close();
         return app;

@@ -18,7 +18,7 @@
     <string name="create_password">Create a Password</string>
     <string name="enter_password">Enter your Password</string>
     <string name="password">Password</string>
-    <string name="password_hint">password1234</string>
+    <string name="password_hint">password123</string>
     <string name="change_password">Change Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="from_play_store">From Play Store</string>

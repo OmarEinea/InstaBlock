@@ -32,8 +32,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.WelcomeActivity">
-        </activity>
+        <activity android:name=".activities.WelcomeActivity"/>
+        <activity
+            android:name=".activities.BlockedDialog"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>
