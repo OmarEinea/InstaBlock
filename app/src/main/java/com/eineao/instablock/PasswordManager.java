@@ -53,12 +53,14 @@ public class PasswordManager {
                 if(password.isEmpty())
                     Toast.makeText(mActivity, "The Password cannot be empty", Toast.LENGTH_SHORT).show();
                 else if(!confirmPassword.getText().toString().equals(password))
-                    Toast.makeText(mActivity, "The Passwords do not match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "The two Passwords didn't match", Toast.LENGTH_SHORT).show();
                 else {
                     if(change)
                         Toast.makeText(mActivity, "Your Password is changed", Toast.LENGTH_SHORT).show();
-                    else
+                    else {
                         Toast.makeText(mActivity, "Welcome to InstaBlock!", Toast.LENGTH_SHORT).show();
+                        mActivity.findViewById(R.id.block_apps_hint).setVisibility(View.VISIBLE);
+                    }
                     setPassword(password);
                     alertDialog.dismiss();
                 }

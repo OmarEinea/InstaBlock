@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 mFabShade.setVisibility(
                         mFabMenu.isExpanded() ? View.VISIBLE : View.INVISIBLE
                 );
+                findViewById(R.id.block_apps_hint).setVisibility(View.GONE);
             }
         });
 
