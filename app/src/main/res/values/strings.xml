@@ -25,4 +25,5 @@
     <string name="from_installed_apps">From Installed Apps</string>
     <string name="predefined_filter">Predefined Filter</string>
     <string name="custom_filter">Custom Filter</string>
+    <string name="start">Let\'s Get Started</string>
 </resources>

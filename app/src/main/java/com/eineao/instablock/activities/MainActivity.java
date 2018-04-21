@@ -115,9 +115,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(mPasswordManager.getPassword().isEmpty())
+        if(mPasswordManager.getPassword().isEmpty()) {
+            startActivity(new Intent(this, WelcomeActivity.class));
             mPasswordManager.registerNewPassword(false);
-        else
+        } else
             mPasswordManager.signInWithPassword(false);
     }
 
