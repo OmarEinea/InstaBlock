@@ -54,7 +54,8 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
         if(filter.getAttempts() > 0) {
             holder.mAttempts.setVisibility(View.VISIBLE);
             holder.mAttempts.setText(filter.getAttemptsString());
-        }
+        } else
+            holder.mAttempts.setVisibility(View.GONE);
         if(mExpandable) {
             holder.mUnblock.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,6 +125,8 @@ public class FiltersAdapter extends ItemsAdapter<ExpandableViewHolder> {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if(filter != null) {
+                        if (mPreviousHolder != null)
+                            mPreviousHolder.mExpandable.collapse();
                         mDB.deleteFilter(filter);
                         Toast.makeText(mContext, filter.getName() + " filter is modified", Toast.LENGTH_SHORT).show();
                     } else

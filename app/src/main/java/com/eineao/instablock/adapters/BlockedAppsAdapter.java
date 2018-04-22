@@ -40,7 +40,8 @@ public class BlockedAppsAdapter extends ItemsAdapter<ExpandableViewHolder> {
         if(app.getAttempts() > 0) {
             holder.mAttempts.setVisibility(View.VISIBLE);
             holder.mAttempts.setText(app.getAttemptsString());
-        }
+        } else
+            holder.mAttempts.setVisibility(View.GONE);
         holder.mInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

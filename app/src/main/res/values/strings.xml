@@ -26,4 +26,6 @@
     <string name="predefined_filter">Predefined Filter</string>
     <string name="custom_filter">Custom Filter</string>
     <string name="start">Let\'s Get Started</string>
+    <string name="should_not_install">Is blocked and should not be installed!</string>
+    <string name="no_install_again">I won\'t install it again</string>
 </resources>

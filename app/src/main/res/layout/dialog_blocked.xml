@@ -61,7 +61,7 @@
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="Is blocked and should not be installed!"/>
+                android:text="@string/should_not_install"/>
         </LinearLayout>
 
         <ImageView
@@ -74,7 +74,7 @@
         android:id="@+id/dismiss_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="I won't install it again"
+        android:text="@string/no_install_again"
         android:textColor="@color/colorAccent"
         style="?android:attr/borderlessButtonStyle"/>
 </LinearLayout>
