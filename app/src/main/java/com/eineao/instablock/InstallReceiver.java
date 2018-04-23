@@ -67,7 +67,9 @@ public class InstallReceiver extends BroadcastReceiver {
             // If it's blocked
             if(blockedApp != null) {
                 // Uninstall the blocked app
-                uninstallPackage(packageName);
+                if(uninstallPackage(packageName))
+                    // Show a toast to indicate that the blocked app was uninstalled
+                    Toast.makeText(context, "InstaBlock uninstalled " + blockedApp.getTitle(), Toast.LENGTH_LONG).show();
                 // Send app name and icon to blocked dialog through intent
                 ByteArrayOutputStream icon = new ByteArrayOutputStream();
                 blockedApp.getIcon().compress(Bitmap.CompressFormat.PNG, 100, icon);
@@ -75,9 +77,6 @@ public class InstallReceiver extends BroadcastReceiver {
                 dialogIntent.putExtra("appIcon", icon.toByteArray());
                 dialogIntent.putExtra("appName", blockedApp.getTitle());
                 context.startActivity(dialogIntent);
-                // Show a toast to indicate that the blocked app was uninstalled
-                Toast.makeText(context, "InstaBlock uninstalled " + blockedApp.getTitle(), Toast.LENGTH_LONG).show();
-//                Toast.makeText(context, "Recorded a blocked installation" + blockedApp.getTitle(), Toast.LENGTH_SHORT).show();
                 if(blockedKeyword == null)
                     appsDB.incrementAppAttempts(packageName);
                 else
@@ -110,11 +109,13 @@ public class InstallReceiver extends BroadcastReceiver {
 //    }
 
     // A function that silently uninstalls a package using root access
-    public static void uninstallPackage(String packageName) {
+    public static boolean uninstallPackage(String packageName) {
         // Make sure root access is granted
         if(RootTools.isAccessGiven())
             try { // Try uninstalling the package using PackageManager's "uninstall" command
                 RootTools.getShell(true).add(new Command(0, "pm uninstall " + packageName));
+                return true;
             } catch (Exception ignored) {}
+        return false;
     }
 }
