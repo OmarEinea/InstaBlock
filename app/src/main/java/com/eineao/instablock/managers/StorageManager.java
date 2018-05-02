@@ -1,4 +1,4 @@
-package com.eineao.instablock;
+package com.eineao.instablock.managers;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.eineao.instablock.fragments.BlockedAppsFragment;
 import com.eineao.instablock.fragments.FiltersFragment;
-import com.eineao.instablock.PasswordManager;
+import com.eineao.instablock.managers.PasswordManager;
 import com.eineao.instablock.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(mPasswordManager.getPassword().isEmpty()) {
+        if(mPasswordManager.isFirstTime()) {
             startActivity(new Intent(this, WelcomeActivity.class));
             mPasswordManager.registerNewPassword(false);
         } else

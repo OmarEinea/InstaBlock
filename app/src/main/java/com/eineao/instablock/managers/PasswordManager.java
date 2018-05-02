@@ -1,15 +1,15 @@
-package com.eineao.instablock;
+package com.eineao.instablock.managers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.eineao.instablock.R;
 
 /**
  *
@@ -18,24 +18,16 @@ import android.widget.Toast;
 
 public class PasswordManager {
     private final String PASSWORD = "password";
-    private SharedPreferences mStorage;
+    private StorageManager mStorage;
     private Activity mActivity;
 
     public PasswordManager(Activity activity) {
         mActivity = activity;
-        mStorage = PreferenceManager.getDefaultSharedPreferences(activity);
+        mStorage = new StorageManager(activity);
     }
 
-    public void setPassword(String password) {
-        mStorage.edit().putString(PASSWORD, password).apply();
-    }
-
-    public String getPassword() {
-        return mStorage.getString(PASSWORD, "");
-    }
-
-    public void clearPassword() {
-        mStorage.edit().clear().apply();
+    public boolean isFirstTime() {
+        return mStorage.get(PASSWORD).isEmpty();
     }
 
     public void registerNewPassword(final boolean change) {
@@ -61,7 +53,7 @@ public class PasswordManager {
                         Toast.makeText(mActivity, "Welcome to InstaBlock!", Toast.LENGTH_SHORT).show();
                         mActivity.findViewById(R.id.block_apps_hint).setVisibility(View.VISIBLE);
                     }
-                    setPassword(password);
+                    mStorage.set(PASSWORD, password);
                     alertDialog.dismiss();
                 }
             }
@@ -87,11 +79,11 @@ public class PasswordManager {
         dialog.findViewById(R.id.enter_password_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(getPassword().equals(password.getText().toString())) {
+                if(mStorage.get(PASSWORD).equals(password.getText().toString())) {
                     alertDialog.dismiss();
 
                     if(change) {
-                        clearPassword();
+                        mStorage.pop(PASSWORD);
                         registerNewPassword(true);
                     } else
                         Toast.makeText(mActivity, "Welcome back!", Toast.LENGTH_SHORT).show();
