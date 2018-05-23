@@ -4,7 +4,12 @@
       tools:context="com.eineao.instablock.activities.MainActivity">
     <item
         android:id="@+id/change_password"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/change_password"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/block_new_installs"
+        android:checkable="true"
+        android:orderInCategory="2"
+        android:title="@string/block_new_installs"/>
 </menu>

@@ -11,9 +11,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
+import com.eineao.instablock.R;
 import com.eineao.instablock.adapters.SearchAppsAdapter;
 import com.eineao.instablock.models.AppModel;
-import com.eineao.instablock.R;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class InstalledAppsActivity extends AppCompatActivity {
             for(ApplicationInfo app : mInstalledApps)
                 if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                     appName = app.loadLabel(mPackageManager).toString();
-                    if (appName.toLowerCase().contains(strings[0]))
+                    if (!appName.equals("InstaBlock") && appName.toLowerCase().contains(strings[0]))
                         mAdapter.addApp(new AppModel(
                                 appName, getIcon(app), app.packageName
                         ));

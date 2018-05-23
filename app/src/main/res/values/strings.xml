@@ -28,4 +28,5 @@
     <string name="start">Let\'s Get Started</string>
     <string name="should_not_install">Is blocked and should not be installed!</string>
     <string name="no_install_again">I won\'t install it again</string>
+    <string name="block_new_installs">Block New Installs</string>
 </resources>

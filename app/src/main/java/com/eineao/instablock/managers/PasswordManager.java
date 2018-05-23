@@ -21,9 +21,9 @@ public class PasswordManager {
     private StorageManager mStorage;
     private Activity mActivity;
 
-    public PasswordManager(Activity activity) {
+    public PasswordManager(Activity activity, StorageManager storage) {
         mActivity = activity;
-        mStorage = new StorageManager(activity);
+        mStorage = storage;
     }
 
     public boolean isFirstTime() {

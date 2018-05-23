@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 public class StorageManager {
     private SharedPreferences mStorage;
 
-    StorageManager(Activity activity) {
+    public StorageManager(Activity activity) {
         mStorage = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 

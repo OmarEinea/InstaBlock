@@ -13,18 +13,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.eineao.instablock.R;
 import com.eineao.instablock.fragments.BlockedAppsFragment;
 import com.eineao.instablock.fragments.FiltersFragment;
 import com.eineao.instablock.managers.PasswordManager;
-import com.eineao.instablock.R;
+import com.eineao.instablock.managers.StorageManager;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String BLOCK_ALL = "block_all";
     private ViewPager mViewPager;
     private TabLayout mTabs;
-    private PasswordManager mPasswordManager;
     private View mFabShade;
+    private StorageManager mStorageManager;
+    private PasswordManager mPasswordManager;
     private FloatingActionsMenu mFabMenu;
     private FloatingActionButton mPlayStoreButton, mInstalledAppsButton,
                                  mPredefinedFiltersButton, mCustomFiltersButton;
@@ -47,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         mInstalledAppsButton = findViewById(R.id.installed_apps_btn);
         mCustomFiltersButton = findViewById(R.id.custom_filters_btn);
         mPredefinedFiltersButton = findViewById(R.id.predefined_filters_btn);
-        mPasswordManager = new PasswordManager(this);
+
+        mStorageManager = new StorageManager(this);
+        mPasswordManager = new PasswordManager(this, mStorageManager);
 
         // Set the adapter that will return a fragment for each of the two tabs
         mViewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager()));
@@ -151,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.change_password:
                 mPasswordManager.signInWithPassword(true);
                 break;
+            case R.id.block_new_installs:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                    mStorageManager.pop(BLOCK_ALL);
+                } else {
+                    item.setChecked(true);
+                    mStorageManager.set(BLOCK_ALL, "checked");
+                }
         }
         return super.onOptionsItemSelected(item);
     }
