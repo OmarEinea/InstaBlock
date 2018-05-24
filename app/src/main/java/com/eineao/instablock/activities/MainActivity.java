@@ -22,7 +22,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String BLOCK_ALL = "block_all";
+    public static final String BLOCK_ALL = "block_all";
     private ViewPager mViewPager;
     private TabLayout mTabs;
     private View mFabShade;
@@ -147,15 +147,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.block_new_installs).setChecked(!mStorageManager.get(BLOCK_ALL).isEmpty());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.change_password:
-                mPasswordManager.signInWithPassword(true);
-                break;
             case R.id.block_new_installs:
                 if (item.isChecked()) {
                     item.setChecked(false);
@@ -163,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     item.setChecked(true);
                     mStorageManager.set(BLOCK_ALL, "checked");
-                }
+                } break;
+            case R.id.change_password:
+                mPasswordManager.signInWithPassword(true);
         }
         return super.onOptionsItemSelected(item);
     }

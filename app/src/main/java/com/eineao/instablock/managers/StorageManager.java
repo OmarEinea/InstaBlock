@@ -1,14 +1,14 @@
 package com.eineao.instablock.managers;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class StorageManager {
     private SharedPreferences mStorage;
 
-    public StorageManager(Activity activity) {
-        mStorage = PreferenceManager.getDefaultSharedPreferences(activity);
+    public StorageManager(Context context) {
+        mStorage = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public void set(String key, String value) {

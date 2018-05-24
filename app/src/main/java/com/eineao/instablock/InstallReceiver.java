@@ -10,8 +10,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.widget.Toast;
 
 import com.eineao.instablock.activities.BlockedDialog;
+import com.eineao.instablock.activities.MainActivity;
 import com.eineao.instablock.helpers.BlockedAppsDatabase;
 import com.eineao.instablock.helpers.FiltersDatabase;
+import com.eineao.instablock.managers.StorageManager;
 import com.eineao.instablock.models.AppModel;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
@@ -31,13 +33,18 @@ public class InstallReceiver extends BroadcastReceiver {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
             String blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
+            if(!new StorageManager(context).get(MainActivity.BLOCK_ALL).isEmpty()) {
+                uninstallPackage(packageName);
+                Toast.makeText(context, "InstaBlock: no installations allowed", Toast.LENGTH_SHORT).show();
+                return;
+            }
             BlockedAppsDatabase appsDB = new BlockedAppsDatabase(context);
             FiltersDatabase filtersDB = new FiltersDatabase(context);
             // Check if installed app is among the blocked apps
             AppModel blockedApp = appsDB.getBlockedApp(packageName);
             // If it isn't blocked
             if(blockedApp == null) {
-                /* Check if app name contains any of the blocked keywords */
+                // Check if app name contains any of the blocked keywords
                 ArrayList<String> keywords = filtersDB.getAllBlockedKeywords();
                 String appName = null;
                 PackageManager pm = context.getPackageManager();
