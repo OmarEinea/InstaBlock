@@ -33,7 +33,7 @@ public class InstallReceiver extends BroadcastReceiver {
         // If the broadcast received is due to an app installation
         if(intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
             String blockedKeyword = null, packageName = intent.getData().getSchemeSpecificPart();
-            if(!new StorageManager(context).get(MainActivity.BLOCK_ALL).isEmpty()) {
+            if(!new StorageManager(context).inStrings(MainActivity.INSTALLED_APPS, packageName)) {
                 uninstallPackage(packageName);
                 Toast.makeText(context, "InstaBlock: no installations allowed", Toast.LENGTH_SHORT).show();
                 return;

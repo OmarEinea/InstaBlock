@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class StorageManager {
     private SharedPreferences mStorage;
 
@@ -17,6 +20,21 @@ public class StorageManager {
 
     public String get(String key) {
         return mStorage.getString(key, "");
+    }
+
+    public void putStrings(String key, Set<String> strings) {
+        mStorage.edit().putStringSet(key, strings).apply();
+    }
+
+    public boolean inStrings(String key, String query) {
+        for(String string : mStorage.getStringSet(key, new HashSet<String>()))
+            if (string.equals(query))
+                return true;
+        return false;
+    }
+
+    public boolean has(String key) {
+        return mStorage.contains(key);
     }
 
     public void pop(String key) {

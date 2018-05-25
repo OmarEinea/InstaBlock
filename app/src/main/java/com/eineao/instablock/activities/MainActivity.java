@@ -1,6 +1,7 @@
 package com.eineao.instablock.activities;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -21,8 +22,11 @@ import com.eineao.instablock.managers.StorageManager;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
-    public static final String BLOCK_ALL = "block_all";
+    public static final String INSTALLED_APPS = "installed_apps";
     private ViewPager mViewPager;
     private TabLayout mTabs;
     private View mFabShade;
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.block_new_installs).setChecked(!mStorageManager.get(BLOCK_ALL).isEmpty());
+        menu.findItem(R.id.block_new_installs).setChecked(mStorageManager.has(INSTALLED_APPS));
         return true;
     }
 
@@ -157,10 +161,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.block_new_installs:
                 if (item.isChecked()) {
                     item.setChecked(false);
-                    mStorageManager.pop(BLOCK_ALL);
+                    mStorageManager.pop(INSTALLED_APPS);
                 } else {
                     item.setChecked(true);
-                    mStorageManager.set(BLOCK_ALL, "checked");
+                    Set<String> apps = new HashSet<>();
+                    for(ApplicationInfo app : getPackageManager().getInstalledApplications(0))
+                        apps.add(app.packageName);
+                    mStorageManager.putStrings(INSTALLED_APPS, apps);
                 } break;
             case R.id.change_password:
                 mPasswordManager.signInWithPassword(true);
